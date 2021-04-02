@@ -68,3 +68,6 @@ crashlytics-build.properties
 ehthumbs.db
 Thumbs.db
 
+# Visual Studio cache directory
+.idea/
+
