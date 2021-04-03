@@ -1,6 +1,5 @@
+using TMPro;
 using UnityEngine;
-
-
 
 [System.Serializable]
 public class Layer
@@ -62,8 +61,12 @@ public class LoopBackgroundSystem : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Layer[] layers;
     
-    [SerializeField] private float speed = 0;
-    
+    [SerializeField] private float damping = 1;
+    [SerializeField] private float newSpeed = 0;
+
+    private float speed;
+    public TextMeshProUGUI Speed_TM;
+
     private Bounds screenBounds;
     
     private void Start()
@@ -84,9 +87,15 @@ public class LoopBackgroundSystem : MonoBehaviour
         }
     }
 
+    public void SetSpeed(float s)
+    {
+        newSpeed = s;
+        Speed_TM.text = "Speed: " + newSpeed;
+    }
     
     void Update()
     {
+        speed = Mathf.Lerp(speed, newSpeed, damping * Time.deltaTime);
         for (var i = 0; i < layers.Length; ++i)
         {
             layers[i]?.Update(screenBounds, speed);
