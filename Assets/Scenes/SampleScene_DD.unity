@@ -3922,7 +3922,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904499300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 787730601}
@@ -4122,7 +4122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973654855}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.5, y: 0, z: 0}
+  m_LocalPosition: {x: 3.27, y: -12.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 787730601}
@@ -4673,7 +4673,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172742518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 73502565}
@@ -5548,7 +5548,8 @@ MonoBehaviour:
   playerCity: {fileID: 1172742520}
   tiltSystem: {fileID: 1172742521}
   shakeSystem: {fileID: 1172742522}
-  playerDefencePosition: {fileID: 0}
+  playerAlonePosition: {fileID: 904499301}
+  playerDefencePosition: {fileID: 842720254}
   cardViews:
   - {fileID: 1840516170}
   - {fileID: 460675264}
@@ -5566,12 +5567,12 @@ MonoBehaviour:
   - {fileID: 417008941}
   - {fileID: 1900951546}
   - {fileID: 1352993116}
-  prefabEnemyCity: {fileID: 0}
-  enemySpawnPoint: {fileID: 0}
-  enemyAttackPosition: {fileID: 0}
-  depth: 600
-  depthSpawnEnemy: 100
-  spawnEnemyDelay: 15
+  prefabEnemyCity: {fileID: 437961163433870939, guid: ec59bc4b4138b494db69fd90a5b1e131, type: 3}
+  enemySpawnPoint: {fileID: 973654856}
+  enemyAttackPosition: {fileID: 333411447}
+  depth: 1000
+  depthSpawnEnemy: 999
+  spawnEnemyDelay: 1
 --- !u!4 &1497737237
 Transform:
   m_ObjectHideFlags: 0
