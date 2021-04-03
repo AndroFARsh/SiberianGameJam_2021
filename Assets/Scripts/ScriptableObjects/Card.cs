@@ -16,7 +16,6 @@ public enum ActionType
 [CreateAssetMenu(fileName = "Card", menuName = "ScriptableObjects/Card", order = 1)]
 public class Card : ScriptableObject
 {
-    public GameObject PrefabCardView;
     public GameObject PrefabItemView;
 
     public ItemType Type;
@@ -25,4 +24,7 @@ public class Card : ScriptableObject
     public int Tilt;
     public int Power;
     public int Value;
+
+    public string Title;
+    public string Description;
 }
