@@ -8,9 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private City playerCity;
     [SerializeField] private LoopBackgroundSystem backgroundSystem;
     [SerializeField] private TiltSystem tiltSystem;
+    [SerializeField] private ShakeSystem shakeSystem;
 
-    
-    
     [SerializeField] private List<CardView> cardViews;
     
     private void Awake()
@@ -40,17 +39,21 @@ public class GameManager : MonoBehaviour
         
         if (tiltAbs >= 3)
         {
-            return -0.5f;
+            //TODO: no negative progress: return -0.5f;
         }
         
         if (tiltAbs >= 2)
         {
+            shakeSystem.StartShake(tiltAbs);
             return 0.0f;
-        } 
-        
+        }
+
+        if(shakeSystem.IsShaking)
+            shakeSystem.StopShake();
+
         if (tiltAbs >= 1)
         {
-            return speed * 0.5f;
+            speed *= 0.5f;
         }
         
         return  speed;
