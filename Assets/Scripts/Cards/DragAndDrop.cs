@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(RectTransform), typeof(CanvasGroup))]
 public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+
     [SerializeField] private float alpha = 0.6f;
     [SerializeField] private float duration = 0.6f;
     
@@ -19,6 +20,9 @@ public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup =  GetComponent<CanvasGroup>();
+        
+        //fast solution
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)

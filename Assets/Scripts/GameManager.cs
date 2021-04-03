@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-using TMPro;
+using System.Collections.Generic;
 using System.Collections;
 using System;
 
@@ -9,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public event Action OnWin;
     public event Action OnLose;
-
+    [SerializeField] private UIController UIController;
     [SerializeField] private City playerCity;
     [SerializeField] private LoopBackgroundSystem backgroundSystem;
     [SerializeField] private TiltSystem tiltSystem;
@@ -17,7 +16,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<CardViewDev> cardViews;
     
-    [SerializeField] private TextMeshProUGUI depthView;
     [SerializeField] private float depth;
 
     private float currentSpeed;
@@ -40,11 +38,9 @@ public class GameManager : MonoBehaviour
     {
         while (depth > 0)
         {            
-            depth -= currentSpeed;
-
-            depthView.text = "Depth: " + (Mathf.Lerp(depth, depth - currentSpeed, Time.deltaTime)).ToString();
-
-            yield return new WaitForSeconds(1f);
+            depth--;
+            UIController.UpdateDepth(depth);
+            yield return new WaitForSeconds(1f/ currentSpeed);
         }
 
         progress = null;
@@ -100,6 +96,10 @@ public class GameManager : MonoBehaviour
         }
         
         return  speed;
+    }
+
+    private void Update()
+    {
     }
 
 }
