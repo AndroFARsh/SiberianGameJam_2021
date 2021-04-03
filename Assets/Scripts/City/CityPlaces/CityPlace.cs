@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Woodman;
+using UnityEngine.VFX;
 
 
 public class CityPlace : MonoBehaviour
@@ -11,6 +12,9 @@ public class CityPlace : MonoBehaviour
     [SerializeField] private bool onLeft ;
     [SerializeField] private ItemType allowedItemType;
     [SerializeField] private ItemDrop itemDrop;
+    
+    [SerializeField] private VisualEffect setAnimation;
+
    
     private Card activeCard;
     private GameObject item;
@@ -36,6 +40,7 @@ public class CityPlace : MonoBehaviour
             case ActionType.Build:
                 if (!IsEmpty || card.Type != allowedItemType) return false;
 
+                setAnimation.Play();
                 activeCard = card;
                 item = Instantiate(card.PrefabItemView, transform);
                 item.name = $"{name}_{card.PrefabItemView.name}";
@@ -45,7 +50,7 @@ public class CityPlace : MonoBehaviour
                 return true;
             case ActionType.Destroy:
                 if (IsEmpty || card.Type != allowedItemType) return false;
-                
+
                 activeCard = null;
                 Destroy(item);
                 item = null;
