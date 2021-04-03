@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public event Action OnWin;
     public event Action OnLose;
 
+    private event Action OnRefreshPlayerStats;
+
     [SerializeField] private UIController UIController;
     [SerializeField] private LoopBackgroundSystem backgroundSystem;
 
@@ -29,16 +31,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform enemyAttackPosition;
 
     [Header("Game Global Parameters")]
-    [Header("Meters")]
     [SerializeField] private float depth = 1000;
-    [SerializeField] private float depthSpawnEnemy = 900;
+    [SerializeField] private float timeSpawnEnemy = 900;
 
-    [Header("Seconds")]
-    [SerializeField] private int spawnEnemyDelay = 15;
+    [Header("Conditions Progress")]
+    [SerializeField] private float totalTime = 90;
 
     private EnemyCity enemyCity;
-    
-    private float currentSpeed;
+
+    private float currentPlayerSpeed;
 
     Coroutine progress;
 
@@ -51,32 +52,33 @@ public class GameManager : MonoBehaviour
 
         playerCity.OnStatsRefreshed += OnStatsRefreshed;
 
+        playerCity.Depth = depth;
+
         progress = StartCoroutine(Progress());
     }
 
     private IEnumerator Progress()
     {
-        while (depth > 0 && playerCity != null)
+        while (depth > 0 && totalTime > 0 && playerCity != null)
         {
+            playerCity.Depth -= currentPlayerSpeed;
+
             if (!enemyCity)
             {
-                spawnEnemyDelay--;
                 if(playerCity.transform.position != playerAlonePosition.position)
                 {
                     SetCityToPos(playerCity, playerAlonePosition.position);
                 }
+
+                CreateEnemy();
             }
-
-            depth -= currentSpeed;
-
-            CreateGameEvent();
 
             yield return new WaitForSeconds(1f);
         }
 
         progress = null;
 
-        if(depth > 0)
+        if(playerCity.Depth <= 0)
         {
             Win();
         }
@@ -86,22 +88,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CreateGameEvent()
+    private void CreateEnemy()
     {
-        if(depth > depthSpawnEnemy && spawnEnemyDelay <= 0)
-        {
-            if (!enemyCity)
-            {
-                var enemy = Instantiate(prefabEnemyCity);
-                enemy.transform.position = enemySpawnPoint.position;
-                enemy.gameObject.SetActive(true);
+        if(totalTime > timeSpawnEnemy && !enemyCity)
+        {      
+            var enemy = Instantiate(prefabEnemyCity);
+            enemy.transform.position = enemySpawnPoint.position;
+            enemy.gameObject.SetActive(true);
 
-                enemyCity = enemy.GetComponent<EnemyCity>();
-                enemyCity.Target = playerCity;
+            enemyCity = enemy.GetComponent<EnemyCity>();
+            enemyCity.Target = playerCity;
+            enemyCity.Depth = depth;
 
-                SetCityToPos(enemyCity, enemyAttackPosition.position);
-                SetCityToPos(playerCity, playerDefencePosition.position);
-            }
+            SetCityToPos(enemyCity, enemyAttackPosition.position);            
         }
     }
 
@@ -129,10 +128,8 @@ public class GameManager : MonoBehaviour
         }
     }
     private void OnStatsRefreshed(CityStats stats)
-    {
-        currentSpeed = depth > 0 ? CalculateSpeedBasedOnTilt(stats.Speed, stats.Tilt) : 0;
-         
-        backgroundSystem.SetSpeed(currentSpeed);
+    {                 
+        backgroundSystem.SetSpeed(depth > 0 ? CalculateSpeedBasedOnTilt(stats.Speed, stats.Tilt) : 0);
 
         tiltSystem.SetTilt(stats.Tilt);
     }

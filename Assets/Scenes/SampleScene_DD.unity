@@ -4716,6 +4716,7 @@ MonoBehaviour:
   - {fileID: 1351731224}
   - {fileID: 94178252}
   - {fileID: 1992077056}
+  Depth: 0
 --- !u!114 &1172742521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5571,8 +5572,8 @@ MonoBehaviour:
   enemySpawnPoint: {fileID: 973654856}
   enemyAttackPosition: {fileID: 333411447}
   depth: 1000
-  depthSpawnEnemy: 999
-  spawnEnemyDelay: 1
+  timeSpawnEnemy: 900
+  totalTime: 90
 --- !u!4 &1497737237
 Transform:
   m_ObjectHideFlags: 0
@@ -9940,7 +9941,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -222.68002, y: 97.46002}
+  m_AnchoredPosition: {x: -222.68005, y: 97.46002}
   m_SizeDelta: {x: 256.7, y: 77.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &469961672674362558
