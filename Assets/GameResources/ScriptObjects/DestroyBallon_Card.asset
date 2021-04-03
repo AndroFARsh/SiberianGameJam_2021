@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e7ce36e7ddf998418151bc540dba060, type: 3}
   m_Name: DestroyBallon_Card
   m_EditorClassIdentifier: 
-  PrefabCardView: {fileID: 5562802240188179933, guid: 92fde990faac0b945a646d1adb6b5f9b, type: 3}
   PrefabItemView: {fileID: 0}
   Type: 1
   Action: 1
   Tilt: 1
   Power: 0
   Value: 1
+  Title: Destroy
+  Description: Balloon

@@ -1,30 +1,32 @@
-using System;
-using UnityEngine;
 
-[RequireComponent(typeof(ScaleButton))]
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
 public class CardView : MonoBehaviour
 {
-    public event Action<Card, CityPlace> OnAddPart; 
+    [SerializeField] private Image image;
+    [SerializeField] private TextMeshProUGUI title;
+    [SerializeField] private TextMeshProUGUI description;
 
     [SerializeField] private Card card;
-    [SerializeField] private CityPlace place;
     
-    ScaleButton button;
+    public Card Card => card;
+
+    private void OnValidate()
+    {
+        SetCard(card);
+    }
 
     private void Awake()
     {
-        button = GetComponent<ScaleButton>();        
-        button.onClick.AddListener(OnClickListener);
+        SetCard(card);
     }
-    
-    private void OnDestroy()
+
+    public void SetCard(Card c)
     {
-        button.onClick.RemoveAllListeners();
-    }
-    
-    private void OnClickListener()
-    {
-        // TODO: user should pick a card and drag&drop to place to build 
-        OnAddPart?.Invoke(card, place);
+        card = c; 
+        title.text = c?.Title;
+        description.text = c?.Description;
     }
 }

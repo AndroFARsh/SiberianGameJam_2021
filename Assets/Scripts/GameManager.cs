@@ -9,8 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LoopBackgroundSystem backgroundSystem;
     [SerializeField] private TiltSystem tiltSystem;
     [SerializeField] private ShakeSystem shakeSystem;
-
-    [SerializeField] private List<CardView> cardViews;
+    [SerializeField] private List<CardViewDev> cardViews;
     
     private void Awake()
     {
@@ -18,6 +17,8 @@ public class GameManager : MonoBehaviour
         {
             cardView.OnAddPart += TryAddPartToPlayerCity;
         }
+
+        playerCity.OnStatsRefreshed += OnStatsRefreshed;
     }
 
     private void TryAddPartToPlayerCity(Card card, CityPlace place)
@@ -25,10 +26,13 @@ public class GameManager : MonoBehaviour
         if (place.TryApplyCard(card))
         {
             playerCity.RefreshStats();
+            
+            OnStatsRefreshed(playerCity.CityStats);
         }
-        
-        var stats = playerCity.CityStats;
+    }
 
+    private void OnStatsRefreshed(CityStats stats)
+    {
         backgroundSystem.SetSpeed(CalculateSpeedBasedOnTilt(stats.Speed, stats.Tilt));
         tiltSystem.SetTilt(stats.Tilt);
     }

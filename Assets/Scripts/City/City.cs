@@ -19,11 +19,17 @@ public class City : MonoBehaviour
     [SerializeField] private List<CityPlace> cityPlaces = new List<CityPlace>();
 
     public CityStats CityStats { get; private set; }
+    public event Action<CityStats> OnStatsRefreshed; 
 
     private void Awake()
     {
         //initialize start stats
         RefreshStats();
+        
+        foreach(var places in cityPlaces)
+        {
+            places.RequestRefresh += RefreshStats;
+        }
     }
 
     public void RefreshStats()
@@ -60,5 +66,7 @@ public class City : MonoBehaviour
             }
         }
         CityStats = stats;
+        
+        OnStatsRefreshed?.Invoke(stats);
     }
 }
