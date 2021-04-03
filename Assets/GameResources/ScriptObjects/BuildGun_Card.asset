@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e7ce36e7ddf998418151bc540dba060, type: 3}
+  m_Name: BuildGun_Card
+  m_EditorClassIdentifier: 
+  PrefabCardView: {fileID: 5562644589448242637, guid: f81721f5a6116e243b7b9ae9c62a2e28, type: 3}
+  PrefabItemView: {fileID: 1218623485955401014, guid: f8a0553a24f5346de9b01d6bdccc1697, type: 3}
+  Type: 2
+  Action: 0
+  Tilt: -1
+  Power: 1
+  Value: 1
