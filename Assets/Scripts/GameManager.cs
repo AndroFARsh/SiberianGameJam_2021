@@ -17,9 +17,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<CardViewDev> cardViews;
     
-
-    [SerializeField] private List<CardView> cardViews;
-
     [SerializeField] private TextMeshProUGUI depthView;
     [SerializeField] private float depth;
 
