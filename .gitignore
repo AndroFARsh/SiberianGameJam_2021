@@ -70,4 +70,4 @@ Thumbs.db
 
 # Visual Studio cache directory
 .idea/
-
+.vscode/
