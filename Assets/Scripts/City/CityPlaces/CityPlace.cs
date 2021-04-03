@@ -11,6 +11,7 @@ public class CityPlace : MonoBehaviour
     // used to calculate te city tilt
     [SerializeField] private bool onLeft ;
     [SerializeField] private ItemType allowedItemType;
+    public ItemType ItemType { get => allowedItemType;  }
     [SerializeField] private ItemDrop itemDrop;
     
     [SerializeField] private VisualEffect setAnimation;

@@ -10,17 +10,10 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject WinWindow;
     [SerializeField] private GameObject LoseWindow;
 
-    [SerializeField] private TextMeshProUGUI depthView;
-
     private void Awake()
     {
         gameManager.OnWin += ShowWin;
         gameManager.OnLose += ShowLose;
-    }
-
-    public void UpdateDepth(float depth)
-    {
-        depthView.text = string.Format ("Depth: {0:0}",  depth);
     }
 
     private void ShowWin()

@@ -16,7 +16,7 @@ public struct CityStats
 public class City : MonoBehaviour
 {
     [SerializeField] private CityStats initCityStats;
-    [SerializeField] private List<CityPlace> cityPlaces = new List<CityPlace>();
+    public List<CityPlace> CityPlaces = new List<CityPlace>();
 
     public CityStats CityStats { get; private set; }
     public event Action<CityStats> OnStatsRefreshed; 
@@ -26,7 +26,7 @@ public class City : MonoBehaviour
         //initialize start stats
         RefreshStats();
         
-        foreach(var places in cityPlaces)
+        foreach(var places in CityPlaces)
         {
             places.RequestRefresh += RefreshStats;
         }
@@ -42,7 +42,7 @@ public class City : MonoBehaviour
             EnergyCapacity = initCityStats.EnergyCapacity,
             EnergyConsumption = initCityStats.EnergyConsumption
         };
-        foreach(var place in cityPlaces)
+        foreach(var place in CityPlaces)
         {
             if (!place.IsEmpty)
             {
