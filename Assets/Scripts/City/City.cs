@@ -19,7 +19,10 @@ public class City : MonoBehaviour
     public List<CityPlace> CityPlaces = new List<CityPlace>();
 
     public CityStats CityStats { get; private set; }
-    public event Action<CityStats> OnStatsRefreshed; 
+    public event Action<CityStats> OnStatsRefreshed;
+
+    public float Depth;
+
 
     private void Awake()
     {
