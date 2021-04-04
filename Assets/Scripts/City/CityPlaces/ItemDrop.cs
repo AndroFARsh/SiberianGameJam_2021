@@ -23,6 +23,7 @@ public class ItemDrop : MonoBehaviour, IDropHandler, IPointerExitHandler, IPoint
     private void Awake()
     {
         image = GetComponent<Image>();
+        image.color = normal;
         initialScale = transform.localScale;
     }
 

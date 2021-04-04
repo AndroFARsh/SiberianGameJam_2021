@@ -5548,15 +5548,6 @@ MonoBehaviour:
   startNumCardInHand: 3
   maxNumCardInHand: 6
   pickCardDelay: 5
-  uniqueCards:
-  - {fileID: 11400000, guid: 1123d657539159843a371a0d4f9e93fa, type: 2}
-  - {fileID: 11400000, guid: 5ccb9cfe69f81f6499dfe7e01991b1ba, type: 2}
-  - {fileID: 11400000, guid: b0b41f6296392499581b11c0ff00b6bd, type: 2}
-  - {fileID: 11400000, guid: 09d7a7e4e4219494c9c1cb519375b124, type: 2}
-  - {fileID: 11400000, guid: 17f6d64aea1bc4399a7c8ed0e7ed32bd, type: 2}
-  - {fileID: 11400000, guid: f1739180ea75f4e1ca2b0d2cb57f5cbc, type: 2}
-  - {fileID: 11400000, guid: d08eb3c6264eb40a9932a928d69d7c53, type: 2}
-  - {fileID: 11400000, guid: 5f5cee124ed1442eda2decdb8f886974, type: 2}
   cardPrefab: {fileID: 2334078869418571525, guid: f1d4c9e79248143b791130d99a6cf3ae, type: 3}
   cardPlacePrefab: {fileID: 2619804397752179267, guid: df989864ab2834f939b75323f97d6cc3, type: 3}
   cardSize: {x: 270, y: 400}
@@ -5566,7 +5557,8 @@ MonoBehaviour:
   dragAlpha: 0.6
   duration: 0.6
   canvas: {fileID: 0}
-  RequestCards: 1
+  gameManager: {fileID: 0}
+  uiController: {fileID: 0}
   Exit: 0
 --- !u!1 &1170656902
 GameObject:
@@ -6923,9 +6915,19 @@ MonoBehaviour:
   divider: {fileID: 1953789235}
   depthSpawnEnemy: 999
   depth: 1000
-  timeSpawnEnemy: 900
+  timeSpawnEnemy: 5
   totalTime: 90
-  spawnEnemyDelay: 0
+  defaultSpawnGameEvent: 10
+  uniqueCards:
+  - {fileID: 11400000, guid: 1123d657539159843a371a0d4f9e93fa, type: 2}
+  - {fileID: 11400000, guid: 5ccb9cfe69f81f6499dfe7e01991b1ba, type: 2}
+  - {fileID: 11400000, guid: 09d7a7e4e4219494c9c1cb519375b124, type: 2}
+  - {fileID: 11400000, guid: b0b41f6296392499581b11c0ff00b6bd, type: 2}
+  - {fileID: 11400000, guid: 17f6d64aea1bc4399a7c8ed0e7ed32bd, type: 2}
+  - {fileID: 11400000, guid: f1739180ea75f4e1ca2b0d2cb57f5cbc, type: 2}
+  - {fileID: 11400000, guid: d08eb3c6264eb40a9932a928d69d7c53, type: 2}
+  - {fileID: 11400000, guid: 5f5cee124ed1442eda2decdb8f886974, type: 2}
+  EnemyCity: {fileID: 0}
 --- !u!4 &1497737237
 Transform:
   m_ObjectHideFlags: 0

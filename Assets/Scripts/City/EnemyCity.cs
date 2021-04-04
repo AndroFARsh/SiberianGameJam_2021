@@ -1,23 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyCity : City
+public class EnemyCity : MonoBehaviour
 {
     [HideInInspector]
-    public City Target;
+    public GameManager GameManager;
 
     public void AttackTarget()
     {        
         int i = 0;
         
-        int place = Random.Range(0, Target.CityPlaces.Count);
+        int place = Random.Range(0, GameManager.PlayerCity.CityPlaces.Count);
 
-        if (Target.CityPlaces[place].IsEmpty)
+        if (GameManager.PlayerCity.CityPlaces[place].IsEmpty)
         {
-            for (i = 0; i < Target.CityPlaces.Count; i++)
+            for (i = 0; i < GameManager.PlayerCity.CityPlaces.Count; i++)
             {
-                if (!Target.CityPlaces[i].IsEmpty)
+                if (!GameManager.PlayerCity.CityPlaces[i].IsEmpty)
                 {
                     place = i;
                     break;
@@ -28,7 +26,7 @@ public class EnemyCity : City
         {
             i = place;
         }
-
+        
         if (place != i)
         {
             Debug.LogError("No occupied target place");
@@ -43,14 +41,14 @@ public class EnemyCity : City
     {
         int i = 0;
 
-        int place = Random.Range(0, CityPlaces.Count);
+        int place = Random.Range(0, GameManager.EnemyCity.CityPlaces.Count);
         Debug.Log(place);
 
-        if (!CityPlaces[place].IsEmpty)
+        if (!GameManager.EnemyCity.CityPlaces[place].IsEmpty)
         {
-            for (i = 0; i < CityPlaces.Count; i++)
+            for (i = 0; i < GameManager.EnemyCity.CityPlaces.Count; i++)
             {
-                if (CityPlaces[i].IsEmpty)
+                if (GameManager.EnemyCity.CityPlaces[i].IsEmpty)
                 {
                     place = i;
                     break;
@@ -70,5 +68,7 @@ public class EnemyCity : City
 
         //build
         //CityPlaces[place].
+        
+        //GameManager.RequestCardOfType()
     }
 }

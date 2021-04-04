@@ -12,7 +12,6 @@ namespace Cards
         [SerializeField] private int maxNumCardInHand;
         [SerializeField] private float pickCardDelay;
         
-        [SerializeField] private Card[] uniqueCards;
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private GameObject cardPlacePrefab;
 
@@ -106,7 +105,7 @@ namespace Cards
         {
             if (hand.Count >= maxNumCardInHand) return;
 
-            var card = PickRandomCard();
+            var card = gameManager.PickRandomCard();
             var view = Create(card);
             
             var rectTransform = view.GetComponent<RectTransform>();
@@ -128,14 +127,6 @@ namespace Cards
             hand.Add(view);
         }
         
-        // TODO: add more complex logic to pick new card
-        private Card PickRandomCard()
-        {
-            var card = uniqueCards[Random.Range(0, uniqueCards.Length)];
-
-            return card;
-        } 
-
         private CardView Create(Card card)
         {
             var placeView = Instantiate(cardPlacePrefab).transform;
