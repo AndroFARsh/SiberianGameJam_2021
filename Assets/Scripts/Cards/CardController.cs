@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Cards
@@ -29,45 +28,76 @@ namespace Cards
 
         [SerializeField] private Canvas canvas;
         
+        [SerializeField] private GameManager gameManager;
+        [SerializeField] private UIController uiController;
+        
         private List<CardView> hand = new List<CardView>(6);
         
-        public bool RequestCards = true;
         public bool Exit;
-        
         
         private bool deselectAnim;
         private SelectedCard selectedCard = new SelectedCard();
-        private HorizontalLayoutGroup layout;
+        private Coroutine pickCardCoroutine;
 
         private void Awake()
         {
+            if (!canvas) canvas = GetComponentInParent<Canvas>();
+            if (!gameManager) gameManager = FindObjectOfType<GameManager>();
+            if (!uiController) uiController = FindObjectOfType<UIController>();
+            
+            gameManager.OnLose += EndGame;
+            gameManager.OnWin += EndGame;
+            uiController.mainWindow.OnStartGame += StartGame;
+        }
+
+        public void StartGame()
+        {
             if (canvas == null) canvas = GetComponentInParent<Canvas>();
 
-            layout = GetComponent<HorizontalLayoutGroup>();
             for (var i = 0; i < startNumCardInHand; ++i)
             {
                 TryPickCard();
             }
 
-            StartCoroutine(Progress());
+            pickCardCoroutine = StartCoroutine(PickCard());
         }
 
-        private IEnumerator Progress()
+        public void EndGame()
+        {
+            StopCoroutine(pickCardCoroutine);
+            Exit = true;
+
+            var sequnce = DOTween.Sequence();
+            for (var i = 0; i < hand.Count; ++i)
+            {
+                var view = hand[i];
+
+                sequnce
+                    .Append(view.CanvasGroup.DOFade(1, duration))
+                    .Join(view.RectTransform.DOScale(0, duration))
+                    .Join(view.RectTransform.DOAnchorPosY(-500, duration)
+                        .OnComplete(() =>
+                        {
+                            Destroy(view.transform.parent.gameObject);
+                        })
+                    );
+            }
+        }
+
+        private IEnumerator PickCard()
         {
             while (!Exit)
             {
                 var delay = pickCardDelay;
-                if (RequestCards)
+                if (deselectAnim || selectedCard.view)
                 {
-                    if (deselectAnim || selectedCard.view)
-                    {
-                        delay = duration;
-                    }
-                    else
-                    {
-                        TryPickCard();
-                    }
+                    delay = duration;
                 }
+                else
+                {
+                    TryPickCard();
+                }
+
                 yield return new WaitForSeconds(delay);
             }
         }
@@ -99,7 +129,12 @@ namespace Cards
         }
         
         // TODO: add more complex logic to pick new card
-        private Card PickRandomCard() => uniqueCards[Random.Range(0, uniqueCards.Length)];
+        private Card PickRandomCard()
+        {
+            var card = uniqueCards[Random.Range(0, uniqueCards.Length)];
+
+            return card;
+        } 
 
         private CardView Create(Card card)
         {
