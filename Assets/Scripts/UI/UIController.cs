@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -49,11 +50,7 @@ public class UIController : MonoBehaviour
 
     private void ShowMainMenu()
     {
-        mainWindow.gameObject.SetActive(true);
-
-        gameWindow.gameObject.SetActive(false);
-        winWindow.gameObject.SetActive(false);
-        loseWindow.gameObject.SetActive(false);
+        SceneManager.LoadScene(0);        
     }
 
     private void ShowGameUI()
