@@ -90,6 +90,7 @@ public class LoopBackgroundSystem : MonoBehaviour
     public void SetSpeed(float s)
     {
         newSpeed = s;
+        if(Speed_TM)
         Speed_TM.text = "Speed: " + newSpeed;
     }
     

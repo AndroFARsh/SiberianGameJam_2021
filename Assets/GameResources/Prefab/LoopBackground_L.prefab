@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   layers:
-  - layerSpeed: 1
+  - layerSpeed: 0.25
     obj: {fileID: 5898061706303563828}
     bounds:
       m_Center: {x: 0, y: 0, z: 0}

@@ -27,6 +27,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private Image enemyDepth;
     [SerializeField] private Text enemyDepthText;
 
+    [SerializeField] private Text timer;
+
     City cap;
 
     private void Awake()
@@ -49,11 +51,12 @@ public class UIController : MonoBehaviour
         {
             if (!enemyDepth.gameObject.activeInHierarchy)
             {
-                enemy.gameObject.SetActive(true);
+                //enemy.gameObject.SetActive(true);
                 enemyDepth.gameObject.SetActive(true);
             }
             enemyDepthText.text = "Depth " + gameManager.EnemyCity.Depth.ToString();
         }
+        timer.text = gameManager.TotalTime.ToString() + " sec";
     }
 
     private void UpdateBar(City city , CityStats stats)

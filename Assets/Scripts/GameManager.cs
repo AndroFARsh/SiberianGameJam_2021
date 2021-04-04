@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Conditions Progress")]
     [SerializeField] private float defaultTotalTime = 90;
-    private float totalTime = 90;
+    public float TotalTime = 90;
 
     private float currentPlayerSpeed;
     private float currentEnemySpeed = 0;
@@ -71,15 +71,15 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
-        totalTime = defaultTotalTime;
+        TotalTime = defaultTotalTime;
         progress = StartCoroutine(Progress());
     }
 
     private IEnumerator Progress()
     {
-        while (totalTime > 0)
+        while (TotalTime > 0)
         {
-            totalTime--;
+            TotalTime--;
 
             PlayerCity.Depth -= currentPlayerSpeed;
 
