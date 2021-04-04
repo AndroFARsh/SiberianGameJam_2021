@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     
     private AudioManager manager;
 
+
     private void Awake()
     {
         startBtn.onClick.AddListener(StartGame);
@@ -20,6 +21,7 @@ public class MainMenu : MonoBehaviour
     {
         manager?.StopSound(AudioManager.Sound.Menu);
         manager?.PlaySound(AudioManager.Sound.Start);
+
         OnStartGame?.Invoke();
     }
 

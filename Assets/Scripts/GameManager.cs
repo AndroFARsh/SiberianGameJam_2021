@@ -26,7 +26,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Transform enemyAttackPosition;
     [SerializeField] private Image divider;
     [SerializeField] private float depthSpawnEnemy;
-    
+
+    [Header("EnemyCats")]
+    [SerializeField] private EnemyCat prefabEnemyCat;
+    [SerializeField] private Transform attackPlayerSpawnPoint;
+    [SerializeField] private Transform attackEnemySpawnPoint;
+
+    [SerializeField] private Transform checkPositionPlayer;
+    [SerializeField] private Transform checkPositionEnemy;
+
     [Header("Game Global Parameters")]
     [SerializeField] private float depth = 1000;
     [SerializeField] private float timeSpawnEnemy = 900;
@@ -143,7 +151,13 @@ public class GameManager : MonoBehaviour
 
         float randomEvent = UnityEngine.Random.Range(0f, 4f);
 
-        if(randomEvent < 2)
+
+        if (randomEvent < 1 && !attackPlayer && !attackEnemy)
+        {
+            AttackRandomCat();
+            return;
+        }
+        else if (randomEvent < 2.5)
         {
             enemyCityAI.AttackTarget();
             return;
@@ -155,9 +169,101 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void AttackRandomCat()
-    {
+    private EnemyCat attackPlayer;
+    private EnemyCat attackEnemy;
 
+    private void AttackRandomCat()
+    {                
+        attackPlayer = Instantiate(prefabEnemyCat, attackPlayerSpawnPoint);
+        attackEnemy = Instantiate(prefabEnemyCat, attackEnemySpawnPoint);
+
+        var random = UnityEngine.Random.Range(0, 10);
+        EnemyCatType catType;
+        
+        catType = random <= 5 ? EnemyCatType.DESTROYER : EnemyCatType.ENERGY_THIEF;
+                
+        attackPlayer.CreateEnemyCat(catType);
+        attackEnemy.CreateEnemyCat(catType);
+
+        attackPlayer.Attack(checkPositionPlayer, () => 
+        {
+            if (!PlayerCity.CityPlaces.Exists((x) => x.ItemType == ItemType.Balloon && !x.IsEmpty))
+            {
+                attackPlayer.ReturnHome();
+                return;
+            }
+
+            CityPlace target = null;
+            Transform targetPlayer = null;
+            int place = -1;
+
+            if (catType == EnemyCatType.DESTROYER)
+            {                
+                target = PlayerCity.CityPlaces.Find(x => x.ItemType == ItemType.Balloon && !x.IsEmpty);
+                targetPlayer = target.transform;
+                place = PlayerCity.CityPlaces.IndexOf(target);
+            }
+            else
+            {
+                target = PlayerCity.CityPlaces.Find(x => x.ItemType == ItemType.Balloon && !x.IsEmpty);
+                targetPlayer = target.transform;
+                place = PlayerCity.CityPlaces.IndexOf(target);
+            }
+
+            if (targetPlayer && place >= 0)
+                attackPlayer.Attack(targetPlayer, () =>
+                {
+                    var card = FindCard(PlayerCity.CityPlaces[place].ItemType, ActionType.Destroy);
+
+                    target.TryApplyCard(card);
+
+                    attackPlayer.ReturnHome();
+                });
+            else
+            {
+                attackPlayer.ReturnHome();
+            }
+
+        });
+
+        attackEnemy.Attack(checkPositionEnemy, () => 
+        {
+            if (!EnemyCity.CityPlaces.Exists((x) => x.ItemType == ItemType.Balloon && !x.IsEmpty))
+            {
+                attackEnemy.ReturnHome(() => { Destroy(attackEnemy); });
+                return;
+            }
+
+            CityPlace target = null;
+            Transform targetEnemy = null;
+            int place = -1;
+
+            if (catType == EnemyCatType.DESTROYER)
+            {
+                target = EnemyCity.CityPlaces.Find(x => x.ItemType == ItemType.Balloon && !x.IsEmpty);
+                targetEnemy = EnemyCity.CityPlaces.Find(x => x.ItemType == ItemType.Balloon && !x.IsEmpty).transform;
+                place = EnemyCity.CityPlaces.IndexOf(target);
+            }
+            else
+            {
+                targetEnemy = EnemyCity.CityPlaces.Find(x => x.ItemType == ItemType.Balloon && !x.IsEmpty).transform;
+                place = EnemyCity.CityPlaces.IndexOf(target);
+                target = EnemyCity.CityPlaces.Find(x => x.ItemType == ItemType.Balloon && !x.IsEmpty);
+            }
+
+            if (targetEnemy && place >=0)
+                attackEnemy.Attack(targetEnemy, () => 
+                {
+                    var card = FindCard(EnemyCity.CityPlaces[place].ItemType, ActionType.Destroy);
+
+                    target.TryApplyCard(card);
+                    attackEnemy.ReturnHome();
+                });
+            else
+            {
+                attackEnemy.ReturnHome();
+            }
+        });        
     }
 
     private Tween SetCityToPos(City city, Vector3 pos)
