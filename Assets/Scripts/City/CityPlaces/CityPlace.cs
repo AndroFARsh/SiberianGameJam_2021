@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Woodman;
 using UnityEngine.VFX;
 
@@ -30,17 +29,32 @@ public class CityPlace : MonoBehaviour
     {
         if (itemDrop)
         {
+            itemDrop.CheckCard += CheckCard;
             itemDrop.TryApplyCard += TryApplyCard;
+        }
+    }
+
+    private bool CheckCard(Card card)
+    {
+        switch (card.Action)
+        {
+            case ActionType.Build:
+                return IsEmpty && card.Type == allowedItemType;
+            case ActionType.Destroy:
+                return !IsEmpty && card.Type == allowedItemType;
+            default:
+                Debug.LogError($"Unsupported action type {card.Action}");
+                return false;
         }
     }
 
     public bool TryApplyCard(Card card)
     {
+        if (!CheckCard(card)) return false;
+        
         switch (card.Action)
         {
             case ActionType.Build:
-                if (!IsEmpty || card.Type != allowedItemType) return false;
-
                 setAnimation.Play();
                 activeCard = card;
                 item = Instantiate(card.PrefabItemView, transform);
@@ -50,8 +64,6 @@ public class CityPlace : MonoBehaviour
                 
                 return true;
             case ActionType.Destroy:
-                if (IsEmpty || card.Type != allowedItemType) return false;
-
                 activeCard = null;
                 Destroy(item);
                 item = null;
@@ -60,8 +72,7 @@ public class CityPlace : MonoBehaviour
                 
                 return true;
             default:
-                Debug.LogError($"Unsupported action type {card.Action}");
-                return true;
+                return false;
         }
     }
 
@@ -71,21 +82,5 @@ public class CityPlace : MonoBehaviour
         var position = tr.position;
         DebugDraw.DrawCircle(Vector3.zero, 0.5f, Color.magenta, tr);
         DebugDraw.DrawMarker(position, 1f, Color.magenta);
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        Debug.Log("OnDrop");
-        if (eventData.pointerDrag != null && 
-            eventData.pointerDrag.TryGetComponent<CardView>(out var cardView) && 
-            TryApplyCard(cardView.Card))
-        {
-            Destroy(eventData.pointerDrag);
-        }
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        Debug.Log("OnDrop");
     }
 }

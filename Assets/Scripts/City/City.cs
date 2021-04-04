@@ -15,14 +15,16 @@ public struct CityStats
 
 public class City : MonoBehaviour
 {
+    [SerializeField] private TiltSystem tiltSystem;
+    [SerializeField] private ShakeSystem shakeSystem;
+    
     [SerializeField] private CityStats initCityStats;
     public List<CityPlace> CityPlaces = new List<CityPlace>();
 
     public CityStats CityStats { get; private set; }
-    public event Action<CityStats> OnStatsRefreshed;
 
     public float Depth;
-
+    public event Action<City, CityStats> OnStatsRefreshed; 
 
     private void Awake()
     {
@@ -32,6 +34,8 @@ public class City : MonoBehaviour
         foreach(var places in CityPlaces)
         {
             places.RequestRefresh += RefreshStats;
+            OnStatsRefreshed += tiltSystem.OnStatRefreshed;
+            OnStatsRefreshed += shakeSystem.OnStatRefreshed;
         }
     }
 
@@ -70,6 +74,6 @@ public class City : MonoBehaviour
         }
         CityStats = stats;
         
-        OnStatsRefreshed?.Invoke(stats);
+        OnStatsRefreshed?.Invoke(this, stats);
     }
 }

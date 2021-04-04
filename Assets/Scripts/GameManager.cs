@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,43 +14,40 @@ public class GameManager : MonoBehaviour
     private event Action OnRefreshPlayerStats;
 
     [SerializeField] private UIController UIController;
-    [SerializeField] private LoopBackgroundSystem backgroundSystem;
+    [SerializeField] private LoopBackgroundSystem backgroundLeft;
+    [SerializeField] private LoopBackgroundSystem backgroundRight;
 
     [Header("Player")]
     [SerializeField] private City playerCity;
-    [SerializeField] private TiltSystem tiltSystem;
-    [SerializeField] private ShakeSystem shakeSystem;
     [SerializeField] private Transform playerAlonePosition;
     [SerializeField] private Transform playerDefencePosition;
-
-    [Header("Card Settings")]
-    [SerializeField] private List<CardViewDev> cardViews;
-
+    
     [Header("Enemy")]
-    [SerializeField] private EnemyCity prefabEnemyCity;
     [SerializeField] private Transform enemySpawnPoint;
     [SerializeField] private Transform enemyAttackPosition;
-
+    [SerializeField] private Image divider;
+    [SerializeField] private float depthSpawnEnemy;
+    
     [Header("Game Global Parameters")]
     [SerializeField] private float depth = 1000;
     [SerializeField] private float timeSpawnEnemy = 900;
 
+
     [Header("Conditions Progress")]
     [SerializeField] private float totalTime = 90;
 
-    private EnemyCity enemyCity;
-
     private float currentPlayerSpeed;
 
+    [Header("Seconds")]
+    [SerializeField] private int spawnEnemyDelay = 15;
+    
+    private City enemyCity;
+    private EnemyCity enemyCityAI;
+   
     Coroutine progress;
 
     private void Awake()
     {
-        foreach(var cardView in cardViews)
-        {
-            cardView.OnAddPart += TryAddPartToPlayerCity;
-        }
-
         playerCity.OnStatsRefreshed += OnStatsRefreshed;
 
         playerCity.Depth = depth;
@@ -90,23 +88,37 @@ public class GameManager : MonoBehaviour
 
     private void CreateEnemy()
     {
-        if(totalTime > timeSpawnEnemy && !enemyCity)
-        {      
-            var enemy = Instantiate(prefabEnemyCity);
-            enemy.transform.position = enemySpawnPoint.position;
-            enemy.gameObject.SetActive(true);
+        if(depth > depthSpawnEnemy && spawnEnemyDelay <= 0)
+        {
+            if (!enemyCity)
+            {
+                var enemy = Instantiate(playerCity.gameObject);
+                enemy.name = $"{playerCity.name}_ENEMY";
+                enemy.transform.position = enemySpawnPoint.position;
+                enemy.gameObject.SetActive(true);
 
-            enemyCity = enemy.GetComponent<EnemyCity>();
-            enemyCity.Target = playerCity;
-            enemyCity.Depth = depth;
+                enemyCity = enemy.GetComponent<City>();
+                enemyCityAI = enemy.AddComponent<EnemyCity>();
+                enemyCityAI.Target = playerCity;
+                enemyCityAI.OnStatsRefreshed += OnStatsRefreshed;
+                enemyCity.OnStatsRefreshed += OnStatsRefreshed;
 
-            SetCityToPos(enemyCity, enemyAttackPosition.position);            
+                SetCityToPos(enemyCity, enemyAttackPosition.position);
+                SetCityToPos(playerCity, playerDefencePosition.position);
+            }
         }
     }
 
     private void SetCityToPos(City city, Vector3 pos)
     {
-        city.transform.DOMove(pos, 3f);
+        city.transform.DOMove(pos, 3f)
+            .OnComplete(() =>
+            {
+                if (divider != null)
+                {
+                    divider.DOFade(1, 0.2f);
+                }
+            });
     }
 
     private void Win()
@@ -118,20 +130,28 @@ public class GameManager : MonoBehaviour
         OnLose?.Invoke();
     }
 
-    private void TryAddPartToPlayerCity(Card card, CityPlace place)
-    {
-        if (place.TryApplyCard(card))
-        {
-            playerCity.RefreshStats();
-            
-            OnStatsRefreshed(playerCity.CityStats);
-        }
-    }
-    private void OnStatsRefreshed(CityStats stats)
-    {                 
-        backgroundSystem.SetSpeed(depth > 0 ? CalculateSpeedBasedOnTilt(stats.Speed, stats.Tilt) : 0);
 
-        tiltSystem.SetTilt(stats.Tilt);
+    private void OnStatsRefreshed(City city, CityStats stats)
+    {
+        var currentSpeed = depth > 0 ? CalculateSpeedBasedOnTilt(stats.Speed, stats.Tilt) : 0;
+
+        if (enemyCity == null)
+        {
+            currentPlayerSpeed = currentSpeed;
+            
+            backgroundLeft.SetSpeed(currentSpeed);
+            backgroundRight.SetSpeed(currentSpeed);
+        } 
+        else if (city == playerCity)
+        {
+            currentPlayerSpeed = currentSpeed;
+            
+            backgroundLeft.SetSpeed(currentSpeed);
+        }
+        else if (city == enemyCity)
+        {
+            backgroundRight.SetSpeed(currentSpeed);
+        }
     }
 
     private float CalculateSpeedBasedOnTilt(float speed, int tilt)
@@ -145,18 +165,14 @@ public class GameManager : MonoBehaviour
         
         if (tiltAbs >= 2)
         {
-            shakeSystem.StartShake(tiltAbs);
             return 0.0f;
         }
-
-        if(shakeSystem.IsShaking)
-            shakeSystem.StopShake();
 
         if (tiltAbs >= 1)
         {
             speed *= 0.5f;
         }
         
-        return  speed;
+        return speed;
     }
 }

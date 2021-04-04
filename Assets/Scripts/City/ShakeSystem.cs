@@ -1,35 +1,56 @@
+using System;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using UnityEngine;
+
 
 public class ShakeSystem : MonoBehaviour
 {
-    [SerializeField] private float duration = 1;
-    [SerializeField] private float coefStrenght = 0.1f;
-    [SerializeField] private int vibrato = 1;
-
-    float magnitude;
-
-    public bool IsShaking { get; private set; }
-        
-    private Tweener shake;
-
-    public void StartShake(float strenght)
+    [System.Serializable]
+    public class TiltToShakeStrenth
     {
-        magnitude = strenght * coefStrenght;
-
-        StopShake();
-
-        IsShaking = true;
-
-        shake = transform.DOShakePosition(duration, magnitude, vibrato).SetLoops(-1);
+        [SerializeField] internal int vibrato = 1;
+        [SerializeField] internal float magnitude = 0.1f;
+        [SerializeField] internal int tilt = 0;
+    }
+    
+    [SerializeField] private float duration = float.MaxValue;
+    [SerializeField] private TiltToShakeStrenth[] tiltToShake; 
+    
+    private TiltToShakeStrenth currentConfig;
+    private Tweener shake;
+    
+    private void OnValidate()
+    {
+        Array.Sort(tiltToShake, (v1, v2) => v1.tilt - v2.tilt);
     }
 
-    public void StopShake()
+    private TiltToShakeStrenth Find(int tilt)
     {
-        IsShaking = false;
+        var mapper = Array.Find(tiltToShake, v1 => v1.tilt == tilt);
+        if (mapper == null && tiltToShake.Length > 0)
+        {
+            mapper = tiltToShake[0];
+        }
 
-        shake.Kill();
+        return mapper;
+    }
+
+    public void OnStatRefreshed(City city, CityStats stats) 
+    {
+        var config = stats.Speed > 0 ? Find(Mathf.Abs(stats.Tilt)) : null;
+        if (currentConfig != config)
+        {
+            currentConfig = config;
+            
+            shake?.Kill();
+
+            if (config != null)
+            {
+                shake = transform.DOShakePosition(duration, config.magnitude, config.vibrato).SetLoops(-1);
+            }
+        }
     }
 }
