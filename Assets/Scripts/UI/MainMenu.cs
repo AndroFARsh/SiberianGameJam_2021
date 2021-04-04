@@ -6,17 +6,20 @@ public class MainMenu : MonoBehaviour
     public event Action OnStartGame;
 
     [SerializeField] private ScaleButton startBtn;
+    
+    private AudioManager manager;
 
     private void Awake()
     {
         startBtn.onClick.AddListener(StartGame);
-        FindObjectOfType<AudioManager>().PlaySound(AudioManager.Sound.Menu);
+        manager = FindObjectOfType<AudioManager>();
+        manager?.PlaySound(AudioManager.Sound.Menu);
     }
 
     private void StartGame()
     {
-        FindObjectOfType<AudioManager>().StopSound(AudioManager.Sound.Menu);
-        FindObjectOfType<AudioManager>().PlaySound(AudioManager.Sound.Start);
+        manager?.StopSound(AudioManager.Sound.Menu);
+        manager?.PlaySound(AudioManager.Sound.Start);
         OnStartGame?.Invoke();
     }
 

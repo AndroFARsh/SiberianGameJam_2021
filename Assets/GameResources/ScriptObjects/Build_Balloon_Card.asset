@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e7ce36e7ddf998418151bc540dba060, type: 3}
   m_Name: Build_Balloon_Card
   m_EditorClassIdentifier: 
-  PrefabItemView: {fileID: 237873402532016602, guid: 8a14b391e3e664c2bb6b0bf3b19ee680, type: 3}
+  PrefabItemView: {fileID: 7591565491370842702, guid: 19bb6bd0c01b24a6aaaa65627a0cee0f, type: 3}
   Type: 1
   Action: 0
   Tilt: 1
