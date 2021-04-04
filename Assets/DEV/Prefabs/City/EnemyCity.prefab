@@ -1373,16 +1373,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3984216061044767512}
-  - component: {fileID: 437961163433870939}
   - component: {fileID: 8283257356376165776}
   - component: {fileID: 5539978804937651399}
+  - component: {fileID: 6795268789219782249}
   m_Layer: 0
   m_Name: EnemyCity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3984216061044767512
 Transform:
   m_ObjectHideFlags: 0
@@ -1407,35 +1407,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &437961163433870939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5442586231577558997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb9da1e268a44d943ad0a3c9bf2db44e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initCityStats:
-    Tilt: 0
-    Speed: 0
-    FirePower: 0
-    EnergyCapacity: 0
-    EnergyConsumption: 0
-  CityPlaces:
-  - {fileID: 2244792147971366875}
-  - {fileID: 7403964644549004730}
-  - {fileID: 3332779513994863831}
-  - {fileID: 2796171776260594098}
-  - {fileID: 611510973746840828}
-  - {fileID: 5079246013477242664}
-  - {fileID: 8746993256740680596}
-  - {fileID: 7364161078901988337}
-  attackCooldown: 10
-  inactionDuration: 10
 --- !u!114 &8283257356376165776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1465,6 +1436,28 @@ MonoBehaviour:
   duration: 100
   coefStrenght: 0.02
   vibrato: 1
+--- !u!114 &6795268789219782249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5442586231577558997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 127046acf45ab466b8e0c5ece4260da2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initCityStats:
+    Tilt: 0
+    Speed: 0
+    FirePower: 0
+    EnergyCapacity: 0
+    EnergyConsumption: 0
+  CityPlaces: []
+  Target: {fileID: 0}
+  attackCooldown: 10
+  inactionDuration: 10
 --- !u!1 &5965070251016770379
 GameObject:
   m_ObjectHideFlags: 0

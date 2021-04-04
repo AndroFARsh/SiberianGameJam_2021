@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e7ce36e7ddf998418151bc540dba060, type: 3}
-  m_Name: BuildGenerator_Card
+  m_Name: Build_Gun_Card
   m_EditorClassIdentifier: 
-  PrefabItemView: {fileID: 7394357175895565739, guid: 9919095d32a0c49dba0cfed1d5388a0d, type: 3}
-  Type: 3
+  PrefabItemView: {fileID: 1218623485955401014, guid: f8a0553a24f5346de9b01d6bdccc1697, type: 3}
+  Type: 2
   Action: 0
   Tilt: -1
-  Power: 0
-  Value: 2
-  Image: {fileID: 21300000, guid: 5c953a4ec961d457ebdd647e598e27ab, type: 3}
-  Title: "\u0413\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440"
-  Description: "\u0412\u044B\u0440\u0430\u0431\u0430\u0442\u044B\u0432\u0430\u0435\u0442
-    \u044D\u043D\u0435\u0440\u0433\u0438\u044E \u0434\u043B\u044F \u0433\u043E\u0440\u043E\u0434\u0430"
-  Parameters: "\u042D\u043D\u0435\u0440\u0433\u0438\u044F: +2 \u0435\u0434./\u0441\u0435\u043A
+  Power: 1
+  Value: 1
+  Image: {fileID: 21300000, guid: 859dc27267d4b4e1dbbd0e5e2b94c632, type: 3}
+  Title: "\u041F\u0443\u0448\u043A\u0430"
+  Description: "\u0421\u0442\u0440\u0435\u043B\u044F\u0435\u0442 \u043F\u043E \u0434\u0438\u043A\u0438\u043C
+    \u0440\u044B\u0431\u043E\u043A\u043E\u0442\u0430\u043C"
+  Parameters: "\u042D\u043D\u0435\u0440\u0433\u0438\u044F: -1 \u0435\u0434./\u0441\u0435\u043A.
     \u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C: \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442
     \u0421\u0438\u043B\u0430 \u043D\u0430\u043A\u043B\u043E\u043D\u0430: 1"

@@ -25,6 +25,8 @@ public class Card : ScriptableObject
     public int Power;
     public int Value;
 
+    public Sprite Image;
     public string Title;
     public string Description;
+    public string Parameters;
 }

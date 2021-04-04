@@ -10,12 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e7ce36e7ddf998418151bc540dba060, type: 3}
-  m_Name: DestroyGun_Card
+  m_Name: Destroy_Gun_Card
   m_EditorClassIdentifier: 
-  PrefabCardView: {fileID: 5562644589448242637, guid: f81721f5a6116e243b7b9ae9c62a2e28, type: 3}
   PrefabItemView: {fileID: 0}
   Type: 2
   Action: 1
   Tilt: -1
   Power: 1
   Value: 1
+  Image: {fileID: 21300000, guid: 8fb7bf1669e8f4ea6a7d95c3d4b5ea1e, type: 3}
+  Title: "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043F\u0443\u0448\u043A\u0443"
+  Description: "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C
+    \"\u041F\u0443\u0448\u043A\u0430\" \u0432 \u0433\u043E\u0440\u043E\u0434\u0435"
+  Parameters: 

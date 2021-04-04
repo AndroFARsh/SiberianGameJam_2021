@@ -7,10 +7,10 @@ public class TiltSystem : MonoBehaviour
     [SerializeField] private float stepAngle = 15;
     [SerializeField] private float duration = 1;
         
-    public void SetTilt(int tilt)
+    public void OnStatRefreshed(City city, CityStats stats)
     {    
         var angles = transform.localEulerAngles;
 
-        transform.DORotate(new Vector3(angles.x, angles.y, tilt * stepAngle), duration);
+        transform.DORotate(new Vector3(angles.x, angles.y, stats.Tilt * stepAngle), duration);
     }
 }
