@@ -14,10 +14,10 @@ public class CityPlace : MonoBehaviour
     [SerializeField] private ItemDrop itemDrop;
     
     [SerializeField] private VisualEffect setAnimation;
-
    
-    private Card activeCard;
-    private GameObject item;
+    public Card activeCard;
+    
+    public GameObject item;
     
     public int TiltFactor => onLeft ? -1 : 1;
     public Card Card => activeCard;

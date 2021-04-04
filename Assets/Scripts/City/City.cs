@@ -34,8 +34,8 @@ public class City : MonoBehaviour
         foreach(var places in CityPlaces)
         {
             places.RequestRefresh += RefreshStats;
-            OnStatsRefreshed += tiltSystem.OnStatRefreshed;
-            OnStatsRefreshed += shakeSystem.OnStatRefreshed;
+            if (tiltSystem) OnStatsRefreshed += tiltSystem.OnStatRefreshed;
+            if (shakeSystem) OnStatsRefreshed += shakeSystem.OnStatRefreshed;
         }
     }
 

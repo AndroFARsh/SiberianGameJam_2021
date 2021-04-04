@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using DG.Tweening;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -70,10 +69,6 @@ public class GameManager : MonoBehaviour
             
             if(!EnemyCity && timeSpawnEnemy == 0)
             {
-                if(PlayerCity.transform.position != playerAlonePosition.position)
-                {
-                    SetCityToPos(PlayerCity, playerAlonePosition.position);
-                }
                 CreateGameEvent();                
             }
             else
@@ -121,9 +116,12 @@ public class GameManager : MonoBehaviour
             enemyCityAI.GameManager = this;
             EnemyCity.OnStatsRefreshed += OnStatsRefreshed;
 
-            SetCityToPos(EnemyCity, enemyAttackPosition.position);
-            SetCityToPos(PlayerCity, playerDefencePosition.position);
-
+            var sequence = DOTween.Sequence()
+                .Append(SetCityToPos(EnemyCity, enemyAttackPosition.position))
+                .Join(SetCityToPos(PlayerCity, playerDefencePosition.position));
+                
+            if (divider) sequence.Append(divider.DOFade(1, 0.2f));
+            
             return;
         }
 
@@ -151,16 +149,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void SetCityToPos(City city, Vector3 pos)
+    private Tween SetCityToPos(City city, Vector3 pos)
     {
-        city.transform.DOMove(pos, 3f)
-            .OnComplete(() =>
-            {
-                if (divider != null)
-                {
-                    divider.DOFade(1, 0.2f);
-                }
-            });
+        return city.transform.DOMove(pos, 3f);
     }
 
     private void Win()
@@ -270,4 +261,7 @@ public class GameManager : MonoBehaviour
 
         return null;
     }
+
+    public Card FindCard(ItemType type, ActionType action) =>
+        Array.Find(uniqueCards, v => v.Type == type && v.Action == action);
 }

@@ -2677,7 +2677,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18.3, y: -0.000030517578}
+  m_AnchoredPosition: {x: 18.3, y: 0}
   m_SizeDelta: {x: 491.2871, y: 313.911}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &475658889
@@ -5707,7 +5707,6 @@ GameObject:
   - component: {fileID: 1172742519}
   - component: {fileID: 1172742520}
   - component: {fileID: 1172742521}
-  - component: {fileID: 1172742522}
   m_Layer: 0
   m_Name: CityWithPlace
   m_TagString: Untagged
@@ -5752,7 +5751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiltSystem: {fileID: 1172742521}
-  shakeSystem: {fileID: 1172742522}
+  shakeSystem: {fileID: 0}
   initCityStats:
     Tilt: 0
     Speed: 0
@@ -5783,29 +5782,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stepAngle: 15
   duration: 1
---- !u!114 &1172742522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1172742518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 464cb5855679b88488a5a6278d90c932, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 1000
-  tiltToShake:
-  - vibrato: 1
-    magnitude: 0.02
-    tilt: 0
-  - vibrato: 1
-    magnitude: 0.05
-    tilt: 1
-  - vibrato: 2
-    magnitude: 0.1
-    tilt: 2
 --- !u!1 &1177368424
 GameObject:
   m_ObjectHideFlags: 0
@@ -6915,7 +6891,7 @@ MonoBehaviour:
   divider: {fileID: 1953789235}
   depthSpawnEnemy: 999
   depth: 1000
-  timeSpawnEnemy: 5
+  timeSpawnEnemy: 25
   totalTime: 90
   defaultSpawnGameEvent: 10
   uniqueCards:
@@ -10933,7 +10909,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 18.3, y: -0.000030517578}
+  m_AnchoredPosition: {x: 18.3, y: 0}
   m_SizeDelta: {x: 491.2871, y: 313.911}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &469961673093371363
