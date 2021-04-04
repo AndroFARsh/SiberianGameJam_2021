@@ -19,8 +19,9 @@ public class GameManager : MonoBehaviour
     public City PlayerCity;
     [SerializeField] private Transform playerAlonePosition;
     [SerializeField] private Transform playerDefencePosition;
-    
-    [Header("Enemy")]
+
+    [Header("Enemy")] 
+    [SerializeField] private Sprite enemySprite;
     [SerializeField] private Transform enemySpawnPoint;
     [SerializeField] private Transform enemyAttackPosition;
     [SerializeField] private Image divider;
@@ -118,11 +119,12 @@ public class GameManager : MonoBehaviour
             enemy.name = $"{PlayerCity.name}_ENEMY";
             enemy.transform.position = enemySpawnPoint.position;
             enemy.gameObject.SetActive(true);
-
+            
             EnemyCity = enemy.GetComponent<City>();
             enemyCityAI = enemy.AddComponent<EnemyCity>();
             enemyCityAI.GameManager = this;
             EnemyCity.OnStatsRefreshed += OnStatsRefreshed;
+            EnemyCity.CityView.sprite = enemySprite;
 
             var sequence = DOTween.Sequence()
                 .Append(SetCityToPos(EnemyCity, enemyAttackPosition.position))

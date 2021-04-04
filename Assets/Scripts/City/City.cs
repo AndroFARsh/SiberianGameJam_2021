@@ -15,12 +15,14 @@ public struct CityStats
 
 public class City : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer cityView;
     [SerializeField] private TiltSystem tiltSystem;
     [SerializeField] private ShakeSystem shakeSystem;
     
     [SerializeField] private CityStats initCityStats;
     public List<CityPlace> CityPlaces = new List<CityPlace>();
 
+    public SpriteRenderer CityView => cityView;
     public CityStats CityStats { get; private set; }
 
     public float Depth;
