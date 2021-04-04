@@ -7,86 +7,68 @@ public class EnemyCity : City
     [HideInInspector]
     public City Target;
 
-    [SerializeField] private int attackCooldown = 10;
+    public void AttackTarget()
+    {        
+        int i = 0;
+        
+        int place = Random.Range(0, Target.CityPlaces.Count);
 
-    [SerializeField] private float inactionDuration = 10f;
-
-    Coroutine activation;
-    Coroutine attackTarget;
-
-    private bool isActivated;
-
-    private void Awake()
-    {
-        activation = StartCoroutine(Activate());
-    }
-
-    private IEnumerator Activate()
-    {
-        while(inactionDuration > 0)
+        if (Target.CityPlaces[place].IsEmpty)
         {
-            inactionDuration--;
-            yield return new WaitForSeconds(1f);
-        }
-
-        isActivated = true;
-
-        activation = null;
-
-        if(attackTarget != null) StopCoroutine(attackTarget);
-        attackTarget = StartCoroutine(AttackTarget());
-    }
-
-    private IEnumerator AttackTarget()
-    {
-        if (!isActivated) yield break;
-
-        var choice = 0;
-        while (Target)
-        {
-            choice = Random.Range(0, 3);
-
-            if (choice < 1)
+            for (i = 0; i < Target.CityPlaces.Count; i++)
             {
-                AttackCityPlaces(ItemType.Balloon);
-            }
-            else if (choice < 2)
-            {
-                StealStat(ItemType.Generator);
-            }
-            else if (choice < 3)
-            {
-                AttackCityPlaces(ItemType.Engine);
-            }
-            else 
-            {
-                AttackCityPlaces(ItemType.Gun);
-            }
-
-
-            yield return new WaitForSeconds(attackCooldown);
-        }
-    }
-
-    private void StealStat(ItemType type)
-    {
-        foreach (var place in Target.CityPlaces)
-        {
-            if (place.ItemType == type && !place.IsEmpty)
-            {
-                //Steal
+                if (!Target.CityPlaces[i].IsEmpty)
+                {
+                    place = i;
+                    break;
+                }
             }
         }
+        else
+        {
+            i = place;
+        }
+
+        if (place != i)
+        {
+            Debug.LogError("No occupied target place");
+            return;
+        }
+
+        //attack
+        //Target.CityPlaces[place].
     }
 
-    private void AttackCityPlaces(ItemType type )
+    public void BuildPlace()
     {
-        foreach (var place in Target.CityPlaces)
+        int i = 0;
+
+        int place = Random.Range(0, CityPlaces.Count);
+        Debug.Log(place);
+
+        if (!CityPlaces[place].IsEmpty)
         {
-            if (place.ItemType == type && !place.IsEmpty)
+            for (i = 0; i < CityPlaces.Count; i++)
             {
-                //Attack
+                if (CityPlaces[i].IsEmpty)
+                {
+                    place = i;
+                    break;
+                }
             }
         }
+        else
+        {
+            i = place;
+        }
+
+        if (place != i)
+        {
+            Debug.LogError("No empty target place");
+            return;
+        }
+
+        //build
+        //CityPlaces[place].
     }
 }

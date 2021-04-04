@@ -39,7 +39,8 @@ public class GameManager : MonoBehaviour
     private float currentPlayerSpeed;
 
     [Header("Seconds")]
-    [SerializeField] private int spawnEnemyDelay = 15;
+    [SerializeField] private int defaultSpawnGameEvent = 10;
+    private int spawnGameEvent = 10;
     
     private City enemyCity;
     private EnemyCity enemyCityAI;
@@ -55,20 +56,34 @@ public class GameManager : MonoBehaviour
         progress = StartCoroutine(Progress());
     }
 
+
+
     private IEnumerator Progress()
     {
         while (depth > 0 && totalTime > 0 && PlayerCity != null)
         {
             PlayerCity.Depth -= currentPlayerSpeed;
-
-            if (!enemyCity)
+            
+            if(!enemyCity && timeSpawnEnemy == 0)
             {
                 if(PlayerCity.transform.position != playerAlonePosition.position)
                 {
                     SetCityToPos(PlayerCity, playerAlonePosition.position);
                 }
+                CreateGameEvent();                
+            }
+            else
+            {
+                timeSpawnEnemy--;
+            }
 
-                CreateEnemy();
+            if(timeSpawnEnemy <= 0 && spawnGameEvent == 0)
+            {
+                CreateGameEvent();
+            }
+            else if(timeSpawnEnemy <= 0)
+            {
+                spawnGameEvent--;
             }
 
             yield return new WaitForSeconds(1f);
@@ -86,27 +101,51 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CreateEnemy()
+    private void CreateGameEvent()
     {
-        if(depth > depthSpawnEnemy && spawnEnemyDelay <= 0)
+        spawnGameEvent = defaultSpawnGameEvent;
+                
+        if (!enemyCity)
         {
-            if (!enemyCity)
-            {
-                var enemy = Instantiate(PlayerCity.gameObject);
-                enemy.name = $"{PlayerCity.name}_ENEMY";
-                enemy.transform.position = enemySpawnPoint.position;
-                enemy.gameObject.SetActive(true);
+            var enemy = Instantiate(PlayerCity.gameObject);
+            enemy.name = $"{PlayerCity.name}_ENEMY";
+            enemy.transform.position = enemySpawnPoint.position;
+            enemy.gameObject.SetActive(true);
 
-                enemyCity = enemy.GetComponent<City>();
-                enemyCityAI = enemy.AddComponent<EnemyCity>();
-                enemyCityAI.Target = PlayerCity;
-                enemyCityAI.OnStatsRefreshed += OnStatsRefreshed;
-                enemyCity.OnStatsRefreshed += OnStatsRefreshed;
+            enemyCity = enemy.GetComponent<City>();
+            enemyCityAI = enemy.AddComponent<EnemyCity>();
+            enemyCityAI.Target = PlayerCity;
+            enemyCityAI.OnStatsRefreshed += OnStatsRefreshed;
+            enemyCity.OnStatsRefreshed += OnStatsRefreshed;
 
-                SetCityToPos(enemyCity, enemyAttackPosition.position);
-                SetCityToPos(PlayerCity, playerDefencePosition.position);
-            }
+            SetCityToPos(enemyCity, enemyAttackPosition.position);
+            SetCityToPos(PlayerCity, playerDefencePosition.position);
+
+            return;
         }
+
+        float randomEvent = UnityEngine.Random.Range(0f, 3f);
+
+        if(randomEvent < 1)
+        {
+            AttackRandomCat();
+            return;
+        } 
+        else if(randomEvent < 2)
+        {
+            enemyCityAI.AttackTarget();
+            return;
+        }
+        else if (randomEvent < 3)
+        {
+            enemyCityAI.BuildPlace();
+            return;
+        }
+    }
+
+    private void AttackRandomCat()
+    {
+
     }
 
     private void SetCityToPos(City city, Vector3 pos)
