@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class MainMenu : MonoBehaviour
     public static AudioManager audioManager;
 
     [SerializeField] private ScaleButton startBtn;
-
+    
 
     private void Awake()
     {

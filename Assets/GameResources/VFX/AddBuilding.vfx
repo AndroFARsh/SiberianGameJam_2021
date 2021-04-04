@@ -976,7 +976,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.ArcCircle, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"circle":{"center":{"x":0.0,"y":0.0,"z":0.0},"radius":0.20000000298023225},"arc":6.2831854820251469}'
+      m_SerializableObject: '{"circle":{"center":{"x":0.0,"y":0.0,"z":0.0},"radius":0.5600000023841858},"arc":6.2831854820251469}'
     m_Space: 0
   m_Property:
     name: ArcCircle

@@ -1,19 +1,18 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 [RequireComponent(typeof(SphereCollider))]
 public class Gun : MonoBehaviour
 {
-    [SerializeField] private CityPlace place;
+    [SerializeField] private VisualEffect effect;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!place.IsEmpty)
+        var cat = other.GetComponent<EnemyCat>();
+        if (cat)
         {
-            var cat = other.GetComponent<EnemyCat>();
-            if (cat)
-            {
-                Destroy(cat.gameObject, 0.5f);
-            }
-        }
+            effect.Play();
+            Destroy(cat.gameObject, 0.5f);
+        }        
     }
 }

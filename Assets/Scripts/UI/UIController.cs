@@ -19,6 +19,14 @@ public class UIController : MonoBehaviour
     [SerializeField] private FinishPopup winWindow;
     [SerializeField] private FinishPopup loseWindow;
 
+    [SerializeField] private Image playerDepth;
+    [SerializeField] private Text playerDepthText;
+
+
+    [SerializeField] private Image enemy;
+    [SerializeField] private Image enemyDepth;
+    [SerializeField] private Text enemyDepthText;
+
     City cap;
 
     private void Awake()
@@ -32,6 +40,20 @@ public class UIController : MonoBehaviour
         gameManager.PlayerCity.OnStatsRefreshed += UpdateBar;
 
         UpdateBar(cap, gameManager.PlayerCity.CityStats);
+    }
+
+    private void Update()
+    {
+        playerDepthText.text = "Depth " +  gameManager.PlayerCity.Depth.ToString();
+        if (gameManager.EnemyCity)
+        {
+            if (!enemyDepth.gameObject.activeInHierarchy)
+            {
+                enemy.gameObject.SetActive(true);
+                enemyDepth.gameObject.SetActive(true);
+            }
+            enemyDepthText.text = "Depth " + gameManager.EnemyCity.Depth.ToString();
+        }
     }
 
     private void UpdateBar(City city , CityStats stats)

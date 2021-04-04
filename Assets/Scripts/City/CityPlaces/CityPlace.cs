@@ -8,18 +8,19 @@ public class CityPlace : MonoBehaviour
 {
     // indicate which side of the city (left/right) the tool place is located
     // used to calculate te city tilt
-    [SerializeField] private bool onLeft ;
+    [SerializeField] private int tilt;
     [SerializeField] private ItemType allowedItemType;
-    public ItemType ItemType { get => allowedItemType;  }
+    public ItemType ItemType { get => allowedItemType; }
     [SerializeField] private ItemDrop itemDrop;
-    
+
     [SerializeField] private VisualEffect setAnimation;
-   
+
     public Card activeCard;
-    
+
     public GameObject item;
-    
-    public int TiltFactor => onLeft ? -1 : 1;
+
+    //left "-1", right "+1"
+    public int TiltFactor => tilt;
     public Card Card => activeCard;
     public bool IsEmpty => activeCard == null || item == null;
 
@@ -84,3 +85,4 @@ public class CityPlace : MonoBehaviour
         DebugDraw.DrawMarker(position, 1f, Color.magenta);
     }
 }
+

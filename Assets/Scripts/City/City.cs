@@ -71,10 +71,25 @@ public class City : MonoBehaviour
                         stats.FirePower += card.Value;
                         stats.EnergyConsumption += card.Power;
                         break;
-                } 
+                }
             }
         }
-        CityStats = stats;
+
+        if(stats.EnergyCapacity <= stats.EnergyConsumption)
+        {
+            stats.FirePower = 0;
+            stats.Speed = 0;
+            foreach (var place in CityPlaces)
+            {
+                if (place.ItemType == ItemType.Balloon && !place.IsEmpty)
+                {
+                    var card = place.Card;
+                    stats.Speed += card.Value;
+                }
+            }
+        }
+
+            CityStats = stats;
         
         OnStatsRefreshed?.Invoke(this, stats);
     }

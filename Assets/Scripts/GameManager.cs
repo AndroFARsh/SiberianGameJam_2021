@@ -111,7 +111,8 @@ public class GameManager : MonoBehaviour
 
         progress = null;
 
-        if(PlayerCity.Depth >= EnemyCity.Depth)
+        
+        if (PlayerCity.Depth < EnemyCity.Depth)
         {
             Win();
         }
@@ -127,6 +128,9 @@ public class GameManager : MonoBehaviour
                 
         if (!EnemyCity)
         {
+            MainMenu.audioManager?.StopSound(AudioManager.Sound.Brif);
+            MainMenu.audioManager?.PlaySound(AudioManager.Sound.Level);
+
             var enemy = Instantiate(PlayerCity.gameObject);
             enemy.name = $"{PlayerCity.name}_ENEMY";
             enemy.transform.position = enemySpawnPoint.position;
