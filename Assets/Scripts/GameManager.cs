@@ -273,10 +273,14 @@ public class GameManager : MonoBehaviour
 
     private void Win()
     {
+        MainMenu.audioManager?.StopSound(AudioManager.Sound.Level);
+        MainMenu.audioManager?.PlaySound(AudioManager.Sound.Win);
         OnWin?.Invoke();
     }
     private void Lose()
     {
+        MainMenu.audioManager?.StopSound(AudioManager.Sound.Level);
+        MainMenu.audioManager?.PlaySound(AudioManager.Sound.Lost);
         OnLose?.Invoke();
     }
 

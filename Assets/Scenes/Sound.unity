@@ -435,6 +435,8 @@ MonoBehaviour:
   allowedItemType: 2
   itemDrop: {fileID: 629724849}
   setAnimation: {fileID: 841329417}
+  activeCard: {fileID: 0}
+  item: {fileID: 0}
 --- !u!1 &110026410
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,6 +829,36 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - sound: 0
+    clip: {fileID: 8300000, guid: 8970ce05831e9074489f7e29bd8069c5, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - sound: 3
+    clip: {fileID: 8300000, guid: b28a270c7b9e73746b044780f24395f9, type: 3}
+    volume: 0.3
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - sound: 4
+    clip: {fileID: 8300000, guid: 873c6b3812089434390902bcdfa7f788, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - sound: 5
+    clip: {fileID: 8300000, guid: 28a325f00ea0a3045bb3be174f406dc6, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - sound: 6
+    clip: {fileID: 8300000, guid: 9c931131f7dcc1548b4ede2857b08b94, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &168064640
 Transform:
   m_ObjectHideFlags: 0
@@ -1050,6 +1082,8 @@ MonoBehaviour:
   allowedItemType: 0
   itemDrop: {fileID: 1048172846}
   setAnimation: {fileID: 1933538153}
+  activeCard: {fileID: 0}
+  item: {fileID: 0}
 --- !u!1 &247829368
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,6 +2050,8 @@ MonoBehaviour:
   allowedItemType: 0
   itemDrop: {fileID: 1598143812}
   setAnimation: {fileID: 717302041}
+  activeCard: {fileID: 0}
+  item: {fileID: 0}
 --- !u!1001 &405529283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2869,10 +2905,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dccd7c61c13b6544c9fa782e65b558ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0
-  isAlive: 0
-  type: 0
-  sprite: {fileID: 0}
+  Type: 0
+  Sprite: {fileID: 0}
+  Duration: 5
+  IsAlive: 0
+  DestroyerSprite: {fileID: 0}
+  ThiefSprite: {fileID: 0}
 --- !u!1 &493693805
 GameObject:
   m_ObjectHideFlags: 0
@@ -5703,15 +5741,6 @@ MonoBehaviour:
   startNumCardInHand: 3
   maxNumCardInHand: 6
   pickCardDelay: 5
-  uniqueCards:
-  - {fileID: 11400000, guid: 1123d657539159843a371a0d4f9e93fa, type: 2}
-  - {fileID: 11400000, guid: 5ccb9cfe69f81f6499dfe7e01991b1ba, type: 2}
-  - {fileID: 11400000, guid: b0b41f6296392499581b11c0ff00b6bd, type: 2}
-  - {fileID: 11400000, guid: 09d7a7e4e4219494c9c1cb519375b124, type: 2}
-  - {fileID: 11400000, guid: 17f6d64aea1bc4399a7c8ed0e7ed32bd, type: 2}
-  - {fileID: 11400000, guid: f1739180ea75f4e1ca2b0d2cb57f5cbc, type: 2}
-  - {fileID: 11400000, guid: d08eb3c6264eb40a9932a928d69d7c53, type: 2}
-  - {fileID: 11400000, guid: 5f5cee124ed1442eda2decdb8f886974, type: 2}
   cardPrefab: {fileID: 2334078869418571525, guid: f1d4c9e79248143b791130d99a6cf3ae, type: 3}
   cardPlacePrefab: {fileID: 2619804397752179267, guid: df989864ab2834f939b75323f97d6cc3, type: 3}
   cardSize: {x: 270, y: 400}
@@ -5721,7 +5750,8 @@ MonoBehaviour:
   dragAlpha: 0.6
   duration: 0.6
   canvas: {fileID: 0}
-  RequestCards: 1
+  gameManager: {fileID: 0}
+  uiController: {fileID: 0}
   Exit: 0
 --- !u!1 &1170656902
 GameObject:
@@ -5914,6 +5944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3d1440b18ac0945937f01a93564455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cityView: {fileID: 0}
   tiltSystem: {fileID: 1172742521}
   shakeSystem: {fileID: 1172742522}
   initCityStats:
@@ -6369,6 +6400,8 @@ MonoBehaviour:
   allowedItemType: 1
   itemDrop: {fileID: 889634128}
   setAnimation: {fileID: 2103255705}
+  activeCard: {fileID: 0}
+  item: {fileID: 0}
 --- !u!1001 &1269128611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6616,6 +6649,8 @@ MonoBehaviour:
   allowedItemType: 3
   itemDrop: {fileID: 1206956489}
   setAnimation: {fileID: 1436661184}
+  activeCard: {fileID: 0}
+  item: {fileID: 0}
 --- !u!1 &1352993114
 GameObject:
   m_ObjectHideFlags: 0
@@ -7030,6 +7065,8 @@ MonoBehaviour:
   allowedItemType: 3
   itemDrop: {fileID: 649830948}
   setAnimation: {fileID: 12283332}
+  activeCard: {fileID: 0}
+  item: {fileID: 0}
 --- !u!1 &1497737235
 GameObject:
   m_ObjectHideFlags: 0
@@ -7065,14 +7102,30 @@ MonoBehaviour:
   PlayerCity: {fileID: 1172742520}
   playerAlonePosition: {fileID: 904499301}
   playerDefencePosition: {fileID: 842720254}
+  enemySprite: {fileID: 0}
   enemySpawnPoint: {fileID: 973654856}
   enemyAttackPosition: {fileID: 333411447}
   divider: {fileID: 1953789235}
   depthSpawnEnemy: 999
+  prefabEnemyCat: {fileID: 0}
+  attackPlayerSpawnPoint: {fileID: 0}
+  attackEnemySpawnPoint: {fileID: 0}
+  checkPositionPlayer: {fileID: 0}
+  checkPositionEnemy: {fileID: 0}
   depth: 1000
   timeSpawnEnemy: 900
-  totalTime: 90
-  spawnEnemyDelay: 0
+  defaultTotalTime: 90
+  defaultSpawnGameEvent: 10
+  uniqueCards:
+  - {fileID: 11400000, guid: 1123d657539159843a371a0d4f9e93fa, type: 2}
+  - {fileID: 11400000, guid: 5ccb9cfe69f81f6499dfe7e01991b1ba, type: 2}
+  - {fileID: 11400000, guid: 09d7a7e4e4219494c9c1cb519375b124, type: 2}
+  - {fileID: 11400000, guid: b0b41f6296392499581b11c0ff00b6bd, type: 2}
+  - {fileID: 11400000, guid: 17f6d64aea1bc4399a7c8ed0e7ed32bd, type: 2}
+  - {fileID: 11400000, guid: f1739180ea75f4e1ca2b0d2cb57f5cbc, type: 2}
+  - {fileID: 11400000, guid: d08eb3c6264eb40a9932a928d69d7c53, type: 2}
+  - {fileID: 11400000, guid: 5f5cee124ed1442eda2decdb8f886974, type: 2}
+  EnemyCity: {fileID: 0}
 --- !u!4 &1497737237
 Transform:
   m_ObjectHideFlags: 0
@@ -7720,10 +7773,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dccd7c61c13b6544c9fa782e65b558ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0
-  isAlive: 0
-  type: 0
-  sprite: {fileID: 0}
+  Type: 0
+  Sprite: {fileID: 0}
+  Duration: 5
+  IsAlive: 0
+  DestroyerSprite: {fileID: 0}
+  ThiefSprite: {fileID: 0}
 --- !u!212 &1657678723
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9599,6 +9654,8 @@ MonoBehaviour:
   allowedItemType: 1
   itemDrop: {fileID: 1912210369}
   setAnimation: {fileID: 1901594579}
+  activeCard: {fileID: 0}
+  item: {fileID: 0}
 --- !u!1 &1992077054
 GameObject:
   m_ObjectHideFlags: 0
@@ -9647,6 +9704,8 @@ MonoBehaviour:
   allowedItemType: 2
   itemDrop: {fileID: 845774503}
   setAnimation: {fileID: 2050181818}
+  activeCard: {fileID: 0}
+  item: {fileID: 0}
 --- !u!1 &2009299303
 GameObject:
   m_ObjectHideFlags: 0
