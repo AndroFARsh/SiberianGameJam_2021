@@ -1,61 +1,61 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+public enum EnemyCatType {
+    ENERGY_THIEF, 
+    DESTROYER
+}
 
 public class EnemyCat : MonoBehaviour
 {
-    public enum EnemyCatType {
-        ENERGY_THIEF, 
-        DESTROYER
+    public EnemyCatType Type;
+    public Sprite Sprite;
+
+    public float Duration = 5;
+    public bool IsAlive = false;
+
+    private Vector3 homePosition;
+
+    public Sprite DestroyerSprite;
+    public Sprite ThiefSprite;
+
+    public void CreateEnemyCat(EnemyCatType type) 
+    {
+        this.Type = type;
+        Sprite = SetSpiteByType(type);
+        IsAlive = true;
     }
 
-    private bool isEnemyForPlayer;
-    private Vector3 HomePosition;
-    public float duration = 5;
-
-    public bool isAlive = false;
-
-    public EnemyCatType type;
-
-    public Sprite sprite;
-
-    public EnemyCat(EnemyCatType type) {
-        this.type = type;
-        this.sprite = setSpiteByType(type);
-        isAlive = true;
-    }
-
-    private Sprite setSpiteByType(EnemyCatType type)
+    private Sprite SetSpiteByType(EnemyCatType type)
     {
         switch(type) {
             case EnemyCatType.DESTROYER:
-                // TODO return sprite for DESTROYER
-                break;
+                return DestroyerSprite;
+                
             case EnemyCatType.ENERGY_THIEF:
-                // TODO return sprite for ENERGY_THIEF
-                break;
+                return ThiefSprite;
+                
         }
         return null;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        HomePosition = transform.position;
+        homePosition = transform.position;
     }
 
     public void Attack(Transform target) 
     {
-        if(isAlive) {
-            transform.DOMove(target.position, duration);
+        if(IsAlive) 
+        {
+            transform.DOMove(target.position, Duration);
         }
     }
 
     public void ReturnHome() 
     {
-        if(isAlive) {
-            transform.DOMove(HomePosition, duration);
+        if(IsAlive) 
+        {
+            transform.DOMove(homePosition, Duration);
         }
     }
 
