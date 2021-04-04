@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6931664212823949414}
   - component: {fileID: 2650016505684128420}
   - component: {fileID: 5135755815884131786}
+  - component: {fileID: 6162497383374207484}
   m_Layer: 0
   m_Name: EnemyCat
   m_TagString: Untagged
@@ -101,3 +102,17 @@ MonoBehaviour:
   IsAlive: 0
   DestroyerSprite: {fileID: 21300000, guid: 5c7857ba30dd5ca4c98e0c66a192443b, type: 3}
   ThiefSprite: {fileID: 21300000, guid: 5c7857ba30dd5ca4c98e0c66a192443b, type: 3}
+--- !u!136 &6162497383374207484
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3258730454769644784}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.85
+  m_Height: 5.31
+  m_Direction: 1
+  m_Center: {x: -0.3, y: 0.42, z: 0}

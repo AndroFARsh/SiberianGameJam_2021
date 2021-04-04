@@ -68,8 +68,7 @@ public class EnemyCity : MonoBehaviour
             return;
         }
 
-        //var card = GameManager.FindCard(enemyCity.CityPlaces[place].ItemType, ActionType.Build);
-        
-        //enemyCity.CityPlaces[place].TryApplyCard(card);                
+        var card = GameManager.FindCard(enemyCity.CityPlaces[place].ItemType, ActionType.Build);
+        enemyCity.CityPlaces[place].TryApplyCard(card);
     }
 }

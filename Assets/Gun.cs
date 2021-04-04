@@ -12,7 +12,7 @@ public class Gun : MonoBehaviour
             var cat = other.GetComponent<EnemyCat>();
             if (cat)
             {
-                Destroy(cat, 0.5f);
+                Destroy(cat.gameObject, 0.5f);
             }
         }
     }

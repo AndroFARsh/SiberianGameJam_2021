@@ -1,5 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
+using System;
+
 public enum EnemyCatType {
     ENERGY_THIEF, 
     DESTROYER
@@ -8,7 +10,7 @@ public enum EnemyCatType {
 public class EnemyCat : MonoBehaviour
 {
     public EnemyCatType Type;
-    public Sprite Sprite;
+    public SpriteRenderer Sprite;
 
     public float Duration = 5;
     public bool IsAlive = false;
@@ -21,7 +23,7 @@ public class EnemyCat : MonoBehaviour
     public void CreateEnemyCat(EnemyCatType type) 
     {
         this.Type = type;
-        Sprite = SetSpiteByType(type);
+        Sprite.sprite = SetSpiteByType(type);
         IsAlive = true;
     }
 
@@ -43,19 +45,26 @@ public class EnemyCat : MonoBehaviour
         homePosition = transform.position;
     }
 
-    public void Attack(Transform target) 
+    public void Attack(Transform target, Action onComplete = null) 
     {
         if(IsAlive) 
         {
-            transform.DOMove(target.position, Duration);
+            transform.DOMove(target.position, Duration).OnComplete(() => 
+            {
+                onComplete?.Invoke(); 
+            });
         }
     }
 
-    public void ReturnHome() 
+    public void ReturnHome(Action onComplete = null) 
     {
         if(IsAlive) 
         {
-            transform.DOMove(homePosition, Duration);
+            transform.DOMove(homePosition, Duration).OnComplete(() =>
+            {
+                Destroy(gameObject);
+                onComplete?.Invoke();
+            }); 
         }
     }
 
