@@ -5,22 +5,23 @@ public class MainMenu : MonoBehaviour
 {
     public event Action OnStartGame;
 
+    public static AudioManager audioManager;
+
     [SerializeField] private ScaleButton startBtn;
-    
-    private AudioManager manager;
 
 
     private void Awake()
     {
+        audioManager = FindObjectOfType<AudioManager>();
+        audioManager?.PlaySound(AudioManager.Sound.Menu);
         startBtn.onClick.AddListener(StartGame);
-        manager = FindObjectOfType<AudioManager>();
-        manager?.PlaySound(AudioManager.Sound.Menu);
     }
 
     private void StartGame()
     {
-        manager?.StopSound(AudioManager.Sound.Menu);
-        manager?.PlaySound(AudioManager.Sound.Start);
+        audioManager?.StopSound(AudioManager.Sound.Menu);
+        audioManager?.PlaySound(AudioManager.Sound.Start);
+        audioManager?.PlaySound(AudioManager.Sound.Brif);
 
         OnStartGame?.Invoke();
     }

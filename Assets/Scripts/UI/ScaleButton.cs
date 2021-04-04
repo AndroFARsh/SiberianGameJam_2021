@@ -23,6 +23,7 @@ public class ScaleButton : Button, IPointerExitHandler, IPointerEnterHandler
             transform.localScale *= scaleCoef;
             isSelected = true;
         }
+        MainMenu.audioManager?.StopSound(AudioManager.Sound.Click);
     }
 
     public override void OnPointerExit(PointerEventData eventData)
