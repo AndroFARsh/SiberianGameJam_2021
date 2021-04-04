@@ -542,6 +542,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7891337378825899612}
   - component: {fileID: 7891337378825899939}
+  - component: {fileID: 2105322503092967480}
+  - component: {fileID: 3969957337797776394}
   m_Layer: 0
   m_Name: Gun_Place_R (Dummy)
   m_TagString: Untagged
@@ -582,6 +584,32 @@ MonoBehaviour:
   setAnimation: {fileID: 7891337379018041881}
   activeCard: {fileID: 0}
   item: {fileID: 0}
+--- !u!114 &2105322503092967480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7891337378825899613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dde5c828b5a3c44aa845bbabff5beb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  place: {fileID: 7891337378825899939}
+--- !u!135 &3969957337797776394
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7891337378825899613}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7891337378836162419
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,7 +2173,7 @@ Transform:
 --- !u!114 &7891337378200122337
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 6415460134608781656, guid: 4ac15aae1f2767e49bf15095f8d75cb0, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7891337380055576269}
@@ -2252,6 +2280,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7891337380087845402}
   - component: {fileID: 7891337379042012015}
+  - component: {fileID: 4149392945150841357}
+  - component: {fileID: 7643865835712307945}
   m_Layer: 0
   m_Name: Gun_Place_L (Dummy)
   m_TagString: Untagged
@@ -2277,7 +2307,7 @@ Transform:
 --- !u!114 &7891337379042012015
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 8290772323932645186, guid: 4ac15aae1f2767e49bf15095f8d75cb0, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7891337380087845403}
@@ -2292,3 +2322,29 @@ MonoBehaviour:
   setAnimation: {fileID: 7891337379958950826}
   activeCard: {fileID: 0}
   item: {fileID: 0}
+--- !u!135 &4149392945150841357
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7891337380087845403}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7643865835712307945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7891337380087845403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dde5c828b5a3c44aa845bbabff5beb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  place: {fileID: 7891337379042012015}
