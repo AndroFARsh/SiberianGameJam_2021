@@ -18,6 +18,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private FinishPopup winWindow;
     [SerializeField] private FinishPopup loseWindow;
 
+    City cap;
+
     private void Awake()
     {
         gameManager.OnWin += ShowWin;
@@ -28,10 +30,10 @@ public class UIController : MonoBehaviour
         winWindow.OnContinueClick += ShowMainMenu;
         gameManager.PlayerCity.OnStatsRefreshed += UpdateBar;
 
-        UpdateBar(gameManager.PlayerCity.CityStats);
+        UpdateBar(cap, gameManager.PlayerCity.CityStats);
     }
 
-    private void UpdateBar(CityStats stats)
+    private void UpdateBar(City city , CityStats stats)
     {
         if(stats.EnergyCapacity == 0)
         {

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LoopBackgroundSystem backgroundRight;
 
     [Header("Player")]
-    [SerializeField] private City playerCity;
+    public City PlayerCity;
     [SerializeField] private Transform playerAlonePosition;
     [SerializeField] private Transform playerDefencePosition;
     
@@ -48,24 +48,24 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        playerCity.OnStatsRefreshed += OnStatsRefreshed;
+        PlayerCity.OnStatsRefreshed += OnStatsRefreshed;
 
-        playerCity.Depth = depth;
+        PlayerCity.Depth = depth;
 
         progress = StartCoroutine(Progress());
     }
 
     private IEnumerator Progress()
     {
-        while (depth > 0 && totalTime > 0 && playerCity != null)
+        while (depth > 0 && totalTime > 0 && PlayerCity != null)
         {
-            playerCity.Depth -= currentPlayerSpeed;
+            PlayerCity.Depth -= currentPlayerSpeed;
 
             if (!enemyCity)
             {
-                if(playerCity.transform.position != playerAlonePosition.position)
+                if(PlayerCity.transform.position != playerAlonePosition.position)
                 {
-                    SetCityToPos(playerCity, playerAlonePosition.position);
+                    SetCityToPos(PlayerCity, playerAlonePosition.position);
                 }
 
                 CreateEnemy();
@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
 
         progress = null;
 
-        if(playerCity.Depth <= 0)
+        if(PlayerCity.Depth <= 0)
         {
             Win();
         }
@@ -92,19 +92,19 @@ public class GameManager : MonoBehaviour
         {
             if (!enemyCity)
             {
-                var enemy = Instantiate(playerCity.gameObject);
-                enemy.name = $"{playerCity.name}_ENEMY";
+                var enemy = Instantiate(PlayerCity.gameObject);
+                enemy.name = $"{PlayerCity.name}_ENEMY";
                 enemy.transform.position = enemySpawnPoint.position;
                 enemy.gameObject.SetActive(true);
 
                 enemyCity = enemy.GetComponent<City>();
                 enemyCityAI = enemy.AddComponent<EnemyCity>();
-                enemyCityAI.Target = playerCity;
+                enemyCityAI.Target = PlayerCity;
                 enemyCityAI.OnStatsRefreshed += OnStatsRefreshed;
                 enemyCity.OnStatsRefreshed += OnStatsRefreshed;
 
                 SetCityToPos(enemyCity, enemyAttackPosition.position);
-                SetCityToPos(playerCity, playerDefencePosition.position);
+                SetCityToPos(PlayerCity, playerDefencePosition.position);
             }
         }
     }
@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
             backgroundLeft.SetSpeed(currentSpeed);
             backgroundRight.SetSpeed(currentSpeed);
         } 
-        else if (city == playerCity)
+        else if (city == PlayerCity)
         {
             currentPlayerSpeed = currentSpeed;
             
