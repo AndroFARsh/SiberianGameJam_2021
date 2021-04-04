@@ -105,14 +105,14 @@ namespace Cards
         {
             if (hand.Count >= maxNumCardInHand) return;
 
-            var card = gameManager.PickRandomCard();
+            var card = gameManager.PickRandomCard(hand);
             var view = Create(card);
             
             var rectTransform = view.GetComponent<RectTransform>();
             var rectTransformParent = rectTransform.parent.GetComponent<RectTransform>();;
             
             rectTransform.sizeDelta = cardSize * dragScale;
-            rectTransform.anchoredPosition = new Vector2(900, 900);
+            rectTransform.anchoredPosition = new Vector2(0, 1000);
             rectTransformParent.sizeDelta = Vector2.zero;
 
             selectedCard.view = view;

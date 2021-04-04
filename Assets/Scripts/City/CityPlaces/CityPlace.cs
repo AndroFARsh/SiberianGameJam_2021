@@ -34,7 +34,7 @@ public class CityPlace : MonoBehaviour
         }
     }
 
-    private bool CheckCard(Card card)
+    public bool CheckCard(Card card)
     {
         switch (card.Action)
         {

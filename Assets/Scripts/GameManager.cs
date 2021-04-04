@@ -218,12 +218,43 @@ public class GameManager : MonoBehaviour
         return speed;
     }
     
-    // // TODO: add more complex logic to pick new card
-    public Card PickRandomCard()
+    public Card PickRandomCard(List<CardView> hand, int maxIteration = 5)
     {
-        var card = uniqueCards[UnityEngine.Random.Range(0, uniqueCards.Length)];
-    
-        return card;
+        do
+        {
+            var card = uniqueCards[UnityEngine.Random.Range(0, uniqueCards.Length)];
+            if (hand.FindAll(v => v.Card.Action == card.Action && v.Card.Type == card.Type).Count <= 1)
+            {
+                for (var i = 0; i < PlayerCity.CityPlaces.Count; i++)
+                {
+                    if (PlayerCity.CityPlaces[i].CheckCard(card) && card.Action != ActionType.Destroy)
+                    {
+                        return card;
+                    }
+                }
+
+                if (EnemyCity)
+                {
+                    for (var i = 0; i < EnemyCity.CityPlaces.Count; i++)
+                    {
+                        if (PlayerCity.CityPlaces[i].CheckCard(card))
+                        {
+                            return card;
+                        }
+                    }
+                }
+                
+                for (var i = 0; i < PlayerCity.CityPlaces.Count; i++)
+                {
+                    if (PlayerCity.CityPlaces[i].CheckCard(card))
+                    {
+                        return card;
+                    }
+                }
+            }
+        } while (maxIteration-- > 0);
+        
+        return uniqueCards[UnityEngine.Random.Range(0, uniqueCards.Length)];
     }
 
     public Card RequestCardOfType(ItemType type, int maxIter = 2)
