@@ -8,14 +8,14 @@ public class EnemyCity : MonoBehaviour
     public void AttackTarget()
     {        
         int i = 0;
-        
-        int place = Random.Range(0, GameManager.PlayerCity.CityPlaces.Count);
+        var playerCity = GameManager.PlayerCity;
+        int place = Random.Range(0, playerCity.CityPlaces.Count);
 
-        if (GameManager.PlayerCity.CityPlaces[place].IsEmpty)
+        if (playerCity.CityPlaces[place].IsEmpty)
         {
-            for (i = 0; i < GameManager.PlayerCity.CityPlaces.Count; i++)
+            for (i = 0; i < playerCity.CityPlaces.Count; i++)
             {
-                if (!GameManager.PlayerCity.CityPlaces[i].IsEmpty)
+                if (!playerCity.CityPlaces[i].IsEmpty)
                 {
                     place = i;
                     break;
@@ -33,22 +33,24 @@ public class EnemyCity : MonoBehaviour
             return;
         }
 
-        //attack
-        //Target.CityPlaces[place].
+        var card = GameManager.FindCard(playerCity.CityPlaces[place].ItemType, ActionType.Destroy);
+
+        playerCity.CityPlaces[place].TryApplyCard(card);
     }
 
     public void BuildPlace()
     {
         int i = 0;
 
-        int place = Random.Range(0, GameManager.EnemyCity.CityPlaces.Count);
-        Debug.Log(place);
+        var enemyCity = GameManager.EnemyCity;
 
-        if (!GameManager.EnemyCity.CityPlaces[place].IsEmpty)
+        int place = Random.Range(0, enemyCity.CityPlaces.Count);
+
+        if (!enemyCity.CityPlaces[place].IsEmpty)
         {
-            for (i = 0; i < GameManager.EnemyCity.CityPlaces.Count; i++)
+            for (i = 0; i < enemyCity.CityPlaces.Count; i++)
             {
-                if (GameManager.EnemyCity.CityPlaces[i].IsEmpty)
+                if (enemyCity.CityPlaces[i].IsEmpty)
                 {
                     place = i;
                     break;
@@ -66,9 +68,8 @@ public class EnemyCity : MonoBehaviour
             return;
         }
 
-        //build
-        //CityPlaces[place].
+        //var card = GameManager.FindCard(enemyCity.CityPlaces[place].ItemType, ActionType.Build);
         
-        //GameManager.RequestCardOfType()
+        //enemyCity.CityPlaces[place].TryApplyCard(card);                
     }
 }

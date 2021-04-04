@@ -1,17 +1,15 @@
 using UnityEngine;
 
-using System.Collections.Generic;
 using System.Collections;
 using System;
 using DG.Tweening;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
     public event Action OnWin;
     public event Action OnLose;
-
-    private event Action OnRefreshPlayerStats;
 
     [SerializeField] private UIController UIController;
     [SerializeField] private LoopBackgroundSystem backgroundLeft;
@@ -37,6 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float totalTime = 90;
 
     private float currentPlayerSpeed;
+    private float currentEnemySpeed = 0;
 
     [Header("Seconds")]
     [SerializeField] private int defaultSpawnGameEvent = 10;
@@ -45,6 +44,7 @@ public class GameManager : MonoBehaviour
     [Header("Cards")]
     [SerializeField] private Card[] uniqueCards;
     
+    [HideInInspector]
     public City EnemyCity;
     private EnemyCity enemyCityAI;
    
@@ -56,22 +56,30 @@ public class GameManager : MonoBehaviour
 
         PlayerCity.Depth = depth;
 
+        UIController.mainWindow.OnStartGame += StartGame;
+    }
+
+    private void StartGame()
+    {
         progress = StartCoroutine(Progress());
     }
 
-
-
     private IEnumerator Progress()
     {
-        while (depth > 0 && totalTime > 0 && PlayerCity != null)
+        while (depth > 0 || totalTime > 0)
         {
             PlayerCity.Depth -= currentPlayerSpeed;
-            
+
+            if (EnemyCity)
+            {
+                EnemyCity.Depth -= currentEnemySpeed;
+            }
+
             if(!EnemyCity && timeSpawnEnemy == 0)
             {
                 CreateGameEvent();                
             }
-            else
+            else if(timeSpawnEnemy>0)
             {
                 timeSpawnEnemy--;
             }
@@ -90,7 +98,7 @@ public class GameManager : MonoBehaviour
 
         progress = null;
 
-        if(PlayerCity.Depth <= 0)
+        if(PlayerCity.Depth > EnemyCity.Depth)
         {
             Win();
         }
@@ -122,22 +130,19 @@ public class GameManager : MonoBehaviour
                 
             if (divider) sequence.Append(divider.DOFade(1, 0.2f));
             
+            SetCityToPos(PlayerCity, playerDefencePosition.position);
+
             return;
         }
 
-        float randomEvent = UnityEngine.Random.Range(0f, 3f);
+        float randomEvent = UnityEngine.Random.Range(0f, 4f);
 
-        if(randomEvent < 1)
-        {
-            AttackRandomCat();
-            return;
-        } 
-        else if(randomEvent < 2)
+        if(randomEvent < 2)
         {
             enemyCityAI.AttackTarget();
             return;
         }
-        else if (randomEvent < 3)
+        else if (randomEvent < 4)
         {
             enemyCityAI.BuildPlace();
             return;
@@ -183,6 +188,7 @@ public class GameManager : MonoBehaviour
         }
         else if (city == EnemyCity)
         {
+            currentEnemySpeed = currentSpeed;
             backgroundRight.SetSpeed(currentSpeed);
         }
     }
@@ -247,6 +253,8 @@ public class GameManager : MonoBehaviour
         
         return uniqueCards[UnityEngine.Random.Range(0, uniqueCards.Length)];
     }
+    public Card FindCard(ItemType type, ActionType action) =>
+        Array.Find(uniqueCards, v => v.Type == type && v.Action == action);
 
     public Card RequestCardOfType(ItemType type, int maxIter = 2)
     {
@@ -262,6 +270,8 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-    public Card FindCard(ItemType type, ActionType action) =>
-        Array.Find(uniqueCards, v => v.Type == type && v.Action == action);
-}
+    private void OnDestroy()
+    {
+        UIController.mainWindow.OnStartGame -= StartGame;
+    }
+    }
