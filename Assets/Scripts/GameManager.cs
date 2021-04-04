@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using DG.Tweening;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -42,7 +43,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int defaultSpawnGameEvent = 10;
     private int spawnGameEvent = 10;
     
-    private City enemyCity;
+    [Header("Cards")]
+    [SerializeField] private Card[] uniqueCards;
+    
+    public City EnemyCity;
     private EnemyCity enemyCityAI;
    
     Coroutine progress;
@@ -64,7 +68,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerCity.Depth -= currentPlayerSpeed;
             
-            if(!enemyCity && timeSpawnEnemy == 0)
+            if(!EnemyCity && timeSpawnEnemy == 0)
             {
                 if(PlayerCity.transform.position != playerAlonePosition.position)
                 {
@@ -105,20 +109,19 @@ public class GameManager : MonoBehaviour
     {
         spawnGameEvent = defaultSpawnGameEvent;
                 
-        if (!enemyCity)
+        if (!EnemyCity)
         {
             var enemy = Instantiate(PlayerCity.gameObject);
             enemy.name = $"{PlayerCity.name}_ENEMY";
             enemy.transform.position = enemySpawnPoint.position;
             enemy.gameObject.SetActive(true);
 
-            enemyCity = enemy.GetComponent<City>();
+            EnemyCity = enemy.GetComponent<City>();
             enemyCityAI = enemy.AddComponent<EnemyCity>();
-            enemyCityAI.Target = PlayerCity;
-            enemyCityAI.OnStatsRefreshed += OnStatsRefreshed;
-            enemyCity.OnStatsRefreshed += OnStatsRefreshed;
+            enemyCityAI.GameManager = this;
+            EnemyCity.OnStatsRefreshed += OnStatsRefreshed;
 
-            SetCityToPos(enemyCity, enemyAttackPosition.position);
+            SetCityToPos(EnemyCity, enemyAttackPosition.position);
             SetCityToPos(PlayerCity, playerDefencePosition.position);
 
             return;
@@ -174,7 +177,7 @@ public class GameManager : MonoBehaviour
     {
         var currentSpeed = depth > 0 ? CalculateSpeedBasedOnTilt(stats.Speed, stats.Tilt) : 0;
 
-        if (enemyCity == null)
+        if (EnemyCity == null)
         {
             currentPlayerSpeed = currentSpeed;
             
@@ -187,7 +190,7 @@ public class GameManager : MonoBehaviour
             
             backgroundLeft.SetSpeed(currentSpeed);
         }
-        else if (city == enemyCity)
+        else if (city == EnemyCity)
         {
             backgroundRight.SetSpeed(currentSpeed);
         }
@@ -213,5 +216,27 @@ public class GameManager : MonoBehaviour
         }
         
         return speed;
+    }
+    
+    // // TODO: add more complex logic to pick new card
+    public Card PickRandomCard()
+    {
+        var card = uniqueCards[UnityEngine.Random.Range(0, uniqueCards.Length)];
+    
+        return card;
+    }
+
+    public Card RequestCardOfType(ItemType type, int maxIter = 2)
+    {
+        do
+        {
+            var card = uniqueCards[UnityEngine.Random.Range(0, uniqueCards.Length)];
+            if (card.Type == type)
+            {
+                return card;
+            }
+        } while (maxIter > 0);
+
+        return null;
     }
 }

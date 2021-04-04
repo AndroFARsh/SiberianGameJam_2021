@@ -10,7 +10,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
 
-    [SerializeField] private MainMenu mainWindow;
+    [SerializeField] public MainMenu mainWindow;
 
     [SerializeField] private GameObject gameWindow;
     [SerializeField] private Image fillEnergyBar;
