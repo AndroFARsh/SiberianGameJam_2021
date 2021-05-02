@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8028047983748457824}
   - component: {fileID: 7398902495085346867}
   - component: {fileID: 7369149860720113228}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Parameters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 468019350280351180}
   - component: {fileID: 6144588445376626297}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 6921247386933532893}
   - component: {fileID: 4455842174981134908}
   - component: {fileID: 1683862047559951706}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -432,7 +432,9 @@ GameObject:
   - component: {fileID: 6635613022089769356}
   - component: {fileID: 8351641331980667870}
   - component: {fileID: 598388012937709582}
-  m_Layer: 0
+  - component: {fileID: 8015551043667687986}
+  - component: {fileID: 3158471317217152831}
+  m_Layer: 5
   m_Name: Card_v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,6 +552,32 @@ MonoBehaviour:
   title: {fileID: 1683862047559951706}
   description: {fileID: 2762994040209046586}
   parameters: {fileID: 7369149860720113228}
+--- !u!114 &8015551043667687986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955749650952688583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bbb2f36b9234d7eaa18b8dc946b0567, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleOnHover: 1.2
+  speed: 10
+--- !u!114 &3158471317217152831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955749650952688583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ebf98aec539421db6b1fd03fb7845ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6083591711466243942
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,7 +589,7 @@ GameObject:
   - component: {fileID: 969152787281986514}
   - component: {fileID: 9062825702784776412}
   - component: {fileID: 2762994040209046586}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}

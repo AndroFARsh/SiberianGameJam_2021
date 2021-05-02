@@ -53,7 +53,7 @@ namespace UnderwaterCats
             if (!TryGetComponent<EntityRef>(out var @ref))
             {
                 var entityRef = gameObject.AddComponent<EntityRef>();
-                entityRef.value = entity;
+                entityRef.Value = entity;
             }
 
             OnConvert(world, entity);
@@ -68,13 +68,17 @@ namespace UnderwaterCats
         
         public class EntityRef : MonoBehaviour {
         
-            internal EcsEntity value;
+            private EcsEntity entity;
             
-            public bool IsAlive => value.IsAlive();
+            public EcsEntity Value
+            {
+                get { return entity.IsAlive() ? entity : EcsEntity.Null; }
+                set { entity = value;  }
+            }
+
+            public bool IsAlive => entity.IsAlive();
             
-            public EcsEntity Value => value.IsAlive() ? value : EcsEntity.Null;
-            
-            public static implicit operator EcsEntity(EntityRef v) => v.value;
+            public static implicit operator EcsEntity(EntityRef v) => v.entity;
         }
     }
 }

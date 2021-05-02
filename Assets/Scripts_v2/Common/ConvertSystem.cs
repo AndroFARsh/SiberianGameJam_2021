@@ -14,7 +14,9 @@ namespace UnderwaterCats
                 var toInit = Converter.ToInit;
                 foreach (var entry in toInit)
                 {
-                    var entity = world.NewEntity();
+                    var entity = (entry.Key.TryGetComponent<Converter.EntityRef>(out var @ref))
+                        ? @ref.Value
+                        : world.NewEntity();
                     foreach (var converter in entry.Value)
                     {
                         converter.Convert(world, entity);

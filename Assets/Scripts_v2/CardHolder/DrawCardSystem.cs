@@ -24,18 +24,14 @@ namespace UnderwaterCats
                     transform.position = config.spawnPosition;
                     
                     var entity = world.NewEntity();
+                    var entityRef = view.gameObject.AddComponent<Converter.EntityRef>();
+                    entityRef.Value = entity;
+                    
                     entity.Replace(new CardComponent {value = card});
-                    entity.Replace(new CardViewComponent {value = view});
-                    entity.Replace(new TransformRef {value = transform});
-                    
-                    entity.Replace(new Position {value = transform.position});
-                    entity.Replace(new Rotation {value = transform.eulerAngles});
-                    entity.Replace(new Scale {value = transform.localScale});
-                    
-                    entity.Replace(new Parent {value = holderEntity});
+                    entity.Replace(new Parent(holderEntity));
                     children.value.Add(entity);
                     
-                    view.Init(entity, card);
+                    view.Init(card);
                 }
                 else
                 {

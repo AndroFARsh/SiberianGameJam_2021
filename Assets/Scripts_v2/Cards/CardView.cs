@@ -1,4 +1,3 @@
-using System;
 using Leopotam.Ecs;
 using TMPro;
 using UnityEngine;
@@ -14,64 +13,32 @@ namespace UnderwaterCats
     {
         public CardView value;
     }
-
-    public struct OnEnterHoverEvent
-    {
-    }
     
-    public struct Hovered
-    {
-    }
-    
-    public struct OnExitHoverEvent
-    {
-    }
-    
-    public struct OnEnterDragEvent
-    {
-    }
-    
-    public struct OnExitDragEvent
-    {
-    }
-    
-    public class CardView: MonoBehaviour
+    public class CardView: Converter
     {
         [SerializeField] private SpriteRenderer icon;
         [SerializeField] private TextMeshPro title;
         [SerializeField] private TextMeshPro description;
         [SerializeField] private TextMeshPro parameters;
 
-        private EcsEntity entity;
-        public void Init(EcsEntity e, Card card)
+        protected override void OnConvert(EcsWorld world, EcsEntity entity)
         {
-            entity = e;
+            entity.Replace(new CardViewComponent {value = this});
+            entity.Replace(new Ref<Transform>(transform));
+                    
+            entity.Replace(new Position {value = transform.position});
+            entity.Replace(new Rotation {value = transform.eulerAngles});
+            entity.Replace(new Scale {value = transform.localScale});
+        }
+        
+        public void Init(Card card)
+        {
             name = card.Title;
             
             icon.sprite = card.Image;
             title.text = card.Title;
             description.text = card.Description;
             parameters.text = card.Parameters;
-        }
-
-        private void OnMouseEnter()
-        {
-            entity.Replace(new OnEnterHoverEvent());
-        }   
-        
-        private void OnMouseExit()
-        {
-            entity.Replace(new OnExitHoverEvent());
-        }
-
-        private void OnMouseDown()
-        {
-            entity.Replace(new OnEnterDragEvent());
-        }
-        
-        private void OnMouseUp()
-        {
-            entity.Replace(new OnExitDragEvent());
         }
     }
 }

@@ -24,10 +24,10 @@ namespace UnderwaterCats
                 // register your systems here, for example:
                 .Add(new ConvertSystem())
                 
+                .Add(new RefreshCardPositionSystem())
+                
                 .Add (new DrawCardCheckSystem())
                 .Add (new DrawCardSystem())
-                
-                .Add(new MoveCardSystem())
                 
                 .Add(new HoverEnterCardSystem())
                 .Add(new HoverExitCardSystem())
@@ -37,14 +37,37 @@ namespace UnderwaterCats
                 .Add(new DragCardSystem())
                 .Add(new DragExitCardSystem())
                 
+                .Add(new BuildPlaceDragCardEnterSystem())
+                .Add(new BuildPlaceDragCardExitSystem())
+                
+                .Add(new DropTargetEnterSystem())
+                .Add(new DropTargetExitSystem())
+                .Add(new DropTargetSystem())
+                
+                .Add(new InitCitySystem())
+                .Add(new RefreshCityStatsSystem())
+                .Add(new TiltCitySystem())
+                .Add(new TiltCityViewSystem())
+                .Add(new BackgroundLoopSystem())
+                
                 .Add(new TransformSystem())
+                
+                .Add(new BuildSystem())
+                .Add(new RemoveCardSystem())
                 
                 // register one-frame components (order is important), for example:
                 .OneFrame<DrawCardEvent>()
+                
                 .OneFrame<OnEnterHoverEvent>()
                 .OneFrame<OnExitHoverEvent>()
+                
                 .OneFrame<OnEnterDragEvent>()
                 .OneFrame<OnExitDragEvent>()
+                
+                .OneFrame<OnEnterDropTargetEvent>()
+                .OneFrame<OnExitDropTargetEvent>()
+                
+                .OneFrame<OnDropEvent>()
                 
                 // inject service instances here (order doesn't important), for example:
                 .Inject (deckService)

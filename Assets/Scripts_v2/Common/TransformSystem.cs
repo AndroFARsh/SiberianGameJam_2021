@@ -5,7 +5,7 @@ namespace UnderwaterCats
 {
     public class TransformSystem : IEcsRunSystem
     {
-        private EcsFilter<TransformRef, Position> filter;
+        private EcsFilter<Ref<Transform>, Position> filter;
 
         public void Run()
         {

@@ -10,10 +10,24 @@ namespace UnderwaterCats
         public Vector3 offset;
     }
     
+    public struct OnEnterDragEvent
+    {
+    }
+    
+    public struct OnExitDragEvent
+    {
+    }
+
+    public struct OnDropEvent
+    {
+        public EcsEntity item;
+        public EcsEntity target;
+    }
+
     public class DragEnterCardSystem: IEcsRunSystem
     {
         private Camera camera;
-        private EcsFilter<Position, OnEnterDragEvent>.Exclude<Dragging> filter;
+        private EcsFilter<Position, Ref<Collider2D>, OnEnterDragEvent>.Exclude<Dragging> filter;
         
         public void Run()
         {
@@ -21,7 +35,10 @@ namespace UnderwaterCats
             {
                 var entity = filter.GetEntity(index);
                 var position = filter.Get1(index).value;
+                var collider = filter.Get2(index).value;
 
+                collider.enabled = false;
+                
                 var distance = Vector3.Distance(position, camera.transform.position);
                 var ray = camera.ScreenPointToRay(Input.mousePosition);
                 var offset = position - ray.GetPoint(distance);
@@ -57,14 +74,31 @@ namespace UnderwaterCats
     
     public class DragExitCardSystem: IEcsRunSystem
     {
-        private EcsFilter<Dragging, OnExitDragEvent> filter;
+        private EcsFilter<Dragging, Ref<Collider2D>, OnExitDragEvent> filter;
         
         public void Run()
         {
             foreach (var index in filter)
             {
                 var entity = filter.GetEntity(index);
+                var collider = filter.Get2(index).value;
+                
+                collider.enabled = true;
                 entity.Del<Dragging>();
+
+                if (entity.Has<DropComponent>())
+                {
+                    // Sent build event
+                    var dropEntity = entity.Get<DropComponent>().value;
+                    var dropEvent = new OnDropEvent
+                    {
+                        item = entity,
+                        target = dropEntity
+                    };
+                    
+                    entity.Replace(dropEvent);
+                    dropEntity.Replace(dropEvent);
+                }
             }
         }
     }

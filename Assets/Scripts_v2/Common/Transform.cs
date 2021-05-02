@@ -2,11 +2,6 @@ using UnityEngine;
 
 namespace UnderwaterCats
 {
-    public struct TransformRef
-    {
-        public Transform value;
-    }
-
     public struct Position
     {
         public Vector3 value;

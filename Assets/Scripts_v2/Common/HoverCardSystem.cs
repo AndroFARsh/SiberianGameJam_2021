@@ -3,17 +3,31 @@ using UnityEngine;
 
 namespace UnderwaterCats
 {
+    
+    public struct OnEnterHoverEvent
+    {
+    }
+    
+    public struct Hovered
+    {
+    }
+    
+    public struct OnExitHoverEvent
+    {
+    }
+    
     public class HoverEnterCardSystem: IEcsRunSystem
     {
-        private EcsFilter<Scale, OnEnterHoverEvent> filter;
+        private EcsFilter<HoverConfig, OnEnterHoverEvent> filter;
         
         public void Run()
         {
             foreach (var index in filter)
             {
                 var entity = filter.GetEntity(index);
-
-                entity.Replace(new Scale {value = Vector3.one * 1.1f});
+                var config = filter.Get1(index);
+                
+                entity.Replace(new Scale {value = Vector3.one * config.hovered});
                 entity.Replace(new Hovered());
             }
         }
@@ -21,7 +35,7 @@ namespace UnderwaterCats
     
     public class HoverCardSystem : IEcsRunSystem
     {
-        private EcsFilter<TransformRef, Scale> filter;
+        private EcsFilter<Ref<Transform>, Scale, HoverConfig> filter;
 
         public void Run()
         {
@@ -29,24 +43,26 @@ namespace UnderwaterCats
             {
                 var transform = filter.Get1(index).value;
                 var newScale = filter.Get2(index).value;
+                var config = filter.Get3(index);
                 var curScale = transform.localScale;
                 
-                transform.localScale = Vector3.Lerp(curScale, newScale, Time.deltaTime * 10);
+                transform.localScale = Vector3.Lerp(curScale, newScale, Time.deltaTime * config.speed);
             }
         }
     }
     
     public class HoverExitCardSystem: IEcsRunSystem
     {
-        private EcsFilter<Scale, Hovered, OnExitHoverEvent> filter;
+        private EcsFilter<HoverConfig, Hovered, OnExitHoverEvent> filter;
         
         public void Run()
         {
             foreach (var index in filter)
             {
                 var entity = filter.GetEntity(index);
+                var config = filter.Get1(index);
                 
-                entity.Replace(new Scale {value = Vector3.one});  
+                entity.Replace(new Scale {value = Vector3.one * config.normal});  
                 entity.Del<Hovered>();
             }
         }
