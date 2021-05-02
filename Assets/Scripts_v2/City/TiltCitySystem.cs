@@ -40,8 +40,12 @@ namespace UnderwaterCats
                 var transform = filter.Get1(index).value;
                 var tiltConfig = filter.Get2(index);
                 var rotation = filter.Get3(index).value;
-                
-                transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, rotation, Time.deltaTime * tiltConfig.speed);
+
+                transform.rotation = Quaternion.Lerp(
+                    transform.rotation,
+                    Quaternion.Euler(rotation),
+                    Time.deltaTime * tiltConfig.speed
+                );
             }
         }
     }
