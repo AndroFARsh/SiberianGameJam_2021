@@ -13,7 +13,8 @@ namespace UnderwaterCats
         void Start()
         {
             // void can be switched to IEnumerator for support coroutines.
-
+            var soundManager = new SoundServiceSystem();
+            
             world = new EcsWorld();
             systems = new EcsSystems(world);
 #if UNITY_EDITOR
@@ -54,6 +55,7 @@ namespace UnderwaterCats
                 
                 .Add(new BuildSystem())
                 .Add(new RemoveCardSystem())
+                .Add(soundManager)
                 
                 // register one-frame components (order is important), for example:
                 .OneFrame<DrawCardEvent>()
@@ -70,9 +72,9 @@ namespace UnderwaterCats
                 .OneFrame<OnDropEvent>()
                 
                 // inject service instances here (order doesn't important), for example:
-                .Inject (deckService)
-                .Inject (Camera.main)
-                // .Inject (new NavMeshSupport ())
+                .Inject(deckService)
+                .Inject(Camera.main)
+                .Inject(soundManager)
                 .Init();
         }
 
