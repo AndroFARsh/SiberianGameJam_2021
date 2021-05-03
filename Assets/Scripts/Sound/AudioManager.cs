@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class AudioManager : MonoBehaviour
 {
-    public GameSound[] sounds;
+    [FormerlySerializedAs("sounds")] public GameSound[] __sounds;
 
     public static AudioManager instance;
 
@@ -49,7 +50,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(gameObject);
-        foreach (GameSound s in sounds)
+        foreach (GameSound s in __sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
@@ -77,7 +78,7 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource GetAudioSource(Sound sound) {
 
-        GameSound soundSource = Array.Find(sounds, s => s.sound.Equals(sound));
+        GameSound soundSource = Array.Find(__sounds, s => s.sound.Equals(sound));
 
         if(soundSource == null)
         {
